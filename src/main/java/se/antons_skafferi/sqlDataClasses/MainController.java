@@ -31,12 +31,16 @@ public class MainController {
     @GetMapping(path="/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
-        //return userRepository.findAll();
-        // testing
-        User user = new User();
-        user.setName("Anton");
-        user.setEmail("eee");
-        userRepository.save(user);
         return userRepository.findAll();
     }
+
+    @GetMapping(path="/test")
+    public @ResponseBody User getTest() {
+        User user = new User();
+        user.setName("Test");
+        user.setEmail("Test-email");
+        
+        return user;
+    }
+
 }
