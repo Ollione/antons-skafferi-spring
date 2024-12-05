@@ -27,4 +27,9 @@ public class MenuController {
     public List<Food> getAllMenuItems() {
         return databaseService.getMenuItems();
     }
+
+    @GetMapping(path="/lunch")
+    public List<DailyLunch> getLunchMenuItems() {
+        return databaseService.getLunchMenuItems();
+    }
 }
