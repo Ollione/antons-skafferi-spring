@@ -169,3 +169,12 @@ CREATE TABLE Food_Order
     FOREIGN KEY (MenuItemID) REFERENCES Food(MenuItemID),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
+
+CREATE TABLE Food_Order_aaaaawawaw
+(
+    MenuItemID INT NOT NULL,
+    OrderID INT NOT NULL,
+    PRIMARY KEY (MenuItemID, OrderID),
+    FOREIGN KEY (MenuItemID) REFERENCES Food(MenuItemID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
