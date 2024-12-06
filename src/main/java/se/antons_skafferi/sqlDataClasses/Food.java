@@ -4,10 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 import java.sql.Time;
 
 @Entity // This tells Hibernate to make a table out of this class
+@Table(name = "food") //Sets the name of the table in the database cuz i swapped the names and yeeted in a new one.
 public class Food {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

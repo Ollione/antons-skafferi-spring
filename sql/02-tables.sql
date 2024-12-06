@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS person
     email VARCHAR(255) NOT NULL,
     phone_number VARCHAR(255) NOT NULL,
     PRIMARY KEY (person_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS employee
 (
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS employee
     PRIMARY KEY (employee_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id),
     UNIQUE (person_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS role
 (
@@ -29,16 +29,15 @@ CREATE TABLE IF NOT EXISTS role
     employee_id INT NOT NULL,
     PRIMARY KEY (role_id),
     UNIQUE (employee_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS lunch
 (
     lunch_id INT AUTO_INCREMENT NOT NULL,
-    date DATE NOT NULL,
     menu_item_id INT NOT NULL,
     PRIMARY KEY (lunch_id),
     UNIQUE (menu_item_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS dinner_menu
 (
@@ -47,34 +46,21 @@ CREATE TABLE IF NOT EXISTS dinner_menu
     price INT NOT NULL,
     PRIMARY KEY (dinner_item_id),
     UNIQUE (menu_item_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS ingredients
 (
     ingredient_id INT AUTO_INCREMENT NOT NULL,
     name VARCHAR(255) NOT NULL,
     PRIMARY KEY (ingredient_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS tables
 (
     table_number INT AUTO_INCREMENT NOT NULL,
     room_for_people INT NOT NULL,
     PRIMARY KEY (table_number)
-    );
-
-CREATE TABLE IF NOT EXISTS orders
-(
-    order_id INT AUTO_INCREMENT NOT NULL,
-    table_number INT NOT NULL,
-    employee_id INT NOT NULL,
-    date DATE NOT NULL,
-    PRIMARY KEY (order_id),
-    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-    FOREIGN KEY (table_number) REFERENCES tables(table_number),
-    UNIQUE (table_number),
-    UNIQUE (employee_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS shift
 (
@@ -85,7 +71,7 @@ CREATE TABLE IF NOT EXISTS shift
     end_time TIME NOT NULL,
     PRIMARY KEY (schedule_id),
     UNIQUE (employee_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS bookings
 (
@@ -95,12 +81,11 @@ CREATE TABLE IF NOT EXISTS bookings
     end_time TIME NOT NULL,
     person_id INT NOT NULL,
     table_number INT NOT NULL,
+    status ENUM('Confirmed', 'Cancelled') NOT NULL DEFAULT 'Confirmed',
     PRIMARY KEY (booking_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id),
-    FOREIGN KEY (table_number) REFERENCES tables(table_number),
-    UNIQUE (person_id),
-    UNIQUE (table_number)
-    );
+    FOREIGN KEY (table_number) REFERENCES tables(table_number)
+);
 
 CREATE TABLE IF NOT EXISTS events
 (
@@ -111,7 +96,21 @@ CREATE TABLE IF NOT EXISTS events
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     PRIMARY KEY (event_id)
-    );
+);
+
+CREATE TABLE IF NOT EXISTS tab
+(
+    tab_id INT AUTO_INCREMENT NOT NULL,
+    table_number INT NOT NULL,
+    employee_id INT NOT NULL,
+    opened_at DATETIME NOT NULL,
+    closed_at DATETIME NOT NULL,
+    status ENUM('Open', 'Closed') NOT NULL DEFAULT 'Open',
+    last_updated_at DATETIME NOT NULL,
+    PRIMARY KEY (tab_id),
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    FOREIGN KEY (table_number) REFERENCES tables(table_number)
+);
 
 CREATE TABLE IF NOT EXISTS works_as
 (
@@ -120,7 +119,7 @@ CREATE TABLE IF NOT EXISTS works_as
     PRIMARY KEY (employee_id, role_id),
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
     FOREIGN KEY (role_id) REFERENCES role(role_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS works_at
 (
@@ -129,7 +128,16 @@ CREATE TABLE IF NOT EXISTS works_at
     PRIMARY KEY (schedule_id, employee_id),
     FOREIGN KEY (schedule_id) REFERENCES shift(schedule_id),
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
-    );
+);
+
+CREATE TABLE IF NOT EXISTS allergic
+(
+    ingredient_id INT NOT NULL,
+    person_id INT NOT NULL,
+    PRIMARY KEY (ingredient_id, person_id),
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id),
+    FOREIGN KEY (person_id) REFERENCES person(person_id)
+);
 
 CREATE TABLE IF NOT EXISTS food
 (
@@ -137,20 +145,35 @@ CREATE TABLE IF NOT EXISTS food
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     time_to_make TIME NOT NULL,
-    dinner_item_id INT NOT NULL,
+    dinner_item_id INT,
     PRIMARY KEY (menu_item_id),
     FOREIGN KEY (dinner_item_id) REFERENCES dinner_menu(dinner_item_id)
-    );
+);
+
+CREATE TABLE IF NOT EXISTS orders
+(
+    order_id INT AUTO_INCREMENT NOT NULL,
+    table_number INT NOT NULL,
+    employee_id INT NOT NULL,
+    date DATE NOT NULL,
+    status ENUM('Waiting','Preparing','Done') NOT NULL DEFAULT 'Waiting',
+    tab_id INT NOT NULL,
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
+    FOREIGN KEY (table_number) REFERENCES tables(table_number),
+    FOREIGN KEY (tab_id) REFERENCES tab(tab_id)
+);
 
 CREATE TABLE IF NOT EXISTS for_lunch
 (
+    date DATE NOT NULL,
     price INT NOT NULL,
     menu_item_id INT NOT NULL,
     lunch_id INT NOT NULL,
     PRIMARY KEY (menu_item_id, lunch_id),
     FOREIGN KEY (menu_item_id) REFERENCES food(menu_item_id),
     FOREIGN KEY (lunch_id) REFERENCES lunch(lunch_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS contains
 (
@@ -159,9 +182,9 @@ CREATE TABLE IF NOT EXISTS contains
     PRIMARY KEY (menu_item_id, ingredient_id),
     FOREIGN KEY (menu_item_id) REFERENCES food(menu_item_id),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
-    );
+);
 
-CREATE TABLE food_order
+CREATE TABLE IF NOT EXISTS food_order
 (
     menu_item_id INT NOT NULL,
     order_id INT NOT NULL,
