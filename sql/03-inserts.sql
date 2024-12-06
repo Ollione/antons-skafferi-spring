@@ -14,9 +14,9 @@ VALUES ('Waiter', 'Serves food', 3, 1),
        ('Sous Chef', 'Assists the chef', 2, 2);
 
 -- Insert data into lunch table
-INSERT INTO lunch (date, menu_item_id)
-VALUES ('2023-02-01', 1),
-       ('2023-02-02', 2);
+INSERT INTO lunch (menu_item_id)
+VALUES (1),
+       (2);
 
 -- Insert data into dinner_menu table
 INSERT INTO dinner_menu (menu_item_id, price)
@@ -33,10 +33,15 @@ INSERT INTO tables (room_for_people)
 VALUES (2),
        (8);
 
+-- Insert data into tab table
+INSERT INTO tab (table_number, employee_id, opened_at, closed_at, status, last_updated_at)
+VALUES (1, 1, '2023-02-01 08:00:00', '2023-02-01 16:00:00', 'Open', '2023-02-01 16:00:00'),
+       (2, 2, '2023-02-02 09:00:00', '2023-02-02 17:00:00', 'Open', '2023-02-02 17:00:00');
+
 -- Insert data into orders table
-INSERT INTO orders (table_number, employee_id, date)
-VALUES (1, 1, '2023-02-01'),
-       (2, 2, '2023-02-02');
+INSERT INTO orders (table_number, employee_id, date, status, tab_id)
+VALUES (1, 1, '2023-02-01', 'Waiting', 1),
+       (2, 2, '2023-02-02', 'Waiting', 2);
 
 -- Insert data into shift table
 INSERT INTO shift (employee_id, shift_date, start_time, end_time)
@@ -44,9 +49,9 @@ VALUES (1, '2023-02-01', '08:00', '16:00'),
        (2, '2023-02-02', '09:00', '17:00');
 
 -- Insert data into bookings table
-INSERT INTO bookings (date, start_time, end_time, person_id, table_number)
-VALUES ('2023-02-01', '10:00', '12:00', 1, 1),
-       ('2023-02-02', '11:00', '13:00', 2, 2);
+INSERT INTO bookings (date, start_time, end_time, person_id, table_number, status)
+VALUES ('2023-02-01', '10:00', '12:00', 1, 1, 'Confirmed'),
+       ('2023-02-02', '11:00', '13:00', 2, 2, 'Confirmed');
 
 -- Insert data into events table
 INSERT INTO events (name, description, date, start_time, end_time)
@@ -69,9 +74,9 @@ VALUES ('Salad', 'Fresh garden salad', '00:15:00', 1),
        ('Soup', 'Hearty vegetable soup', '00:20:00', 2);
 
 -- Insert data into for_lunch table
-INSERT INTO for_lunch (price, menu_item_id, lunch_id)
-VALUES (8, 1, 1),
-       (9, 2, 2);
+INSERT INTO for_lunch (date, price, menu_item_id, lunch_id)
+VALUES ('2023-02-01', 8, 1, 1),
+       ('2023-02-02', 9, 2, 2);
 
 -- Insert data into contains table (food and ingredients)
 INSERT INTO contains (menu_item_id, ingredient_id)

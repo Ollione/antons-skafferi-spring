@@ -4,16 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 import java.util.Date;
 
 @Entity
+@Table(name = "lunch")
 public class Lunch {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer menu_item_id;
     private Integer lunch_id;
-    private Date date;
 
     public Integer getMenu_item_id() {
         return menu_item_id;
@@ -28,8 +30,5 @@ public class Lunch {
     }
     public void setLunch_id(Integer lunch_id) {
         this.lunch_id = lunch_id;
-    }
-    public void setDate(Date date) {
-        this.date = date;
     }
 }
