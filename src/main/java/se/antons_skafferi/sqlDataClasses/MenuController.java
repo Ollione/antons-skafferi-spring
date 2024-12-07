@@ -32,4 +32,9 @@ public class MenuController {
     public List<DailyLunch> getLunchMenuItems() {
         return databaseService.getLunchMenuItems();
     }
+
+    @GetMapping(path="/dinner")
+    public List<DinnerMenuItem> getDinnerMenuItems() {
+        return databaseService.getDinnerMenuItems();
+    }
 }

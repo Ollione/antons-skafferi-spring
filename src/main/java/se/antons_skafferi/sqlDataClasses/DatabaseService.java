@@ -28,5 +28,8 @@ public class DatabaseService {
         return foodRepository.findLunch();
     }
 
+    public List<DinnerMenuItem> getDinnerMenuItems() {
+        return foodRepository.findDinnerMenuItems();
+    }
 
 }
