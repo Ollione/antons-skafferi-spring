@@ -13,6 +13,8 @@ public class DatabaseService {
 
     @Autowired
     private FoodRepository foodRepository;
+    @Autowired
+    private BookingRepository BookingRepository;
 
     /**
      * Get all menu items
@@ -28,5 +30,12 @@ public class DatabaseService {
         return foodRepository.findLunch();
     }
 
+    public List<DinnerMenuItem> getDinnerMenuItems() {
+        return foodRepository.findDinnerMenuItems();
+    }
+
+    public List<Bookings> getBookings() {
+        return BookingRepository.findAll();
+    }
 
 }

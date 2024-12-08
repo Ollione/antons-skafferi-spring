@@ -24,4 +24,10 @@ public interface FoodRepository extends CrudRepository<Food, Integer> {
             "FROM Food f JOIN ForLunch fl ON f.menu_item_id = fl.menu_item_id")
     List<DailyLunch> findLunch();
 
+    @Query("SELECT new se.antons_skafferi.sqlDataClasses.DinnerMenuItem(f.name, f.description, dm.price) " +
+            "FROM Food f JOIN DinnerMenu dm ON f.menu_item_id = dm.menu_item_id")
+    List<DinnerMenuItem> findDinnerMenuItems();
+
+
+
 }
