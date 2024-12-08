@@ -21,3 +21,22 @@ cat sql/01-drops.sql sql/02-tables.sql sql/03-inserts.sql | docker exec -i anton
 ```
 The server can then be found at localhost:8080
 The menu can be accessed at localhost:8080/menu/all
+
+
+## Building
+To build the project to a docker image, first go to the maven tab in IntelliJ and select lifecycle and then package.
+This should create a .jar file in the target folder.
+Then run the following command in the terminal, you might need sudo/root/admin permissions.
+```
+docker build -t webbserver .
+```
+This will build the docker image with the .jar file in it.
+To upload the image to dockerhub you will need to login to dockerhub in the terminal. 
+Then run the following command, 
+```
+docker tag webbserver ndrs03/webbserver
+docker push ndrs03/webbserver
+```
+This will upload the image to dockerhub. You will need collaborator permissions to the repository to push.
+
+If any changes are made to the sql files or compose, update the files in GitHub.
