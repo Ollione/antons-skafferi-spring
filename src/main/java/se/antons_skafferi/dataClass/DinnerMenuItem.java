@@ -1,4 +1,4 @@
-package se.antons_skafferi.sqlDataClasses;
+package se.antons_skafferi.dataClass;
 
 public class DinnerMenuItem {
     private String name;

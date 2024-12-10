@@ -1,4 +1,4 @@
-package se.antons_skafferi.sqlDataClasses;
+package se.antons_skafferi.dataClass;
 
 import java.util.Date;
 

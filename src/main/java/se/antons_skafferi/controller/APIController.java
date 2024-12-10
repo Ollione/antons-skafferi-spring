@@ -1,10 +1,11 @@
-package se.antons_skafferi.sqlDataClasses;
+package se.antons_skafferi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.antons_skafferi.service.DatabaseService;
 
 import java.util.List;
 // This means that this class is a Controller
