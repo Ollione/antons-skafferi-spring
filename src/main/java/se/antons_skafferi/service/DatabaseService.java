@@ -1,11 +1,13 @@
-package se.antons_skafferi.sqlDataClasses;
+package se.antons_skafferi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.antons_skafferi.dataClass.Bookings;
+import se.antons_skafferi.dataClass.DailyLunch;
+import se.antons_skafferi.dataClass.DinnerMenuItem;
+import se.antons_skafferi.dataClass.Food;
+import se.antons_skafferi.repository.FoodRepository;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -14,7 +16,7 @@ public class DatabaseService {
     @Autowired
     private FoodRepository foodRepository;
     @Autowired
-    private BookingRepository BookingRepository;
+    private se.antons_skafferi.repository.BookingRepository BookingRepository;
 
     /**
      * Get all menu items

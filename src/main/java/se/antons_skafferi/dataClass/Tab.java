@@ -1,4 +1,4 @@
-package se.antons_skafferi.sqlDataClasses;
+package se.antons_skafferi.dataClass;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 @Table(name = "tab")

@@ -1,9 +1,12 @@
-package se.antons_skafferi.sqlDataClasses;
+package se.antons_skafferi.repository;
 
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import se.antons_skafferi.dataClass.DailyLunch;
+import se.antons_skafferi.dataClass.DinnerMenuItem;
+import se.antons_skafferi.dataClass.Food;
 
 import java.sql.Date;
 import java.util.List;
@@ -20,11 +23,11 @@ public interface FoodRepository extends CrudRepository<Food, Integer> {
 //    @Query("SELECT l FROM Food f JOIN Lunch l ON f.menu_item_id = l.menu_item_id")
 //    List<Food> findLunch();
 
-    @Query("SELECT new se.antons_skafferi.sqlDataClasses.DailyLunch(f.name, f.description, fl.date, fl.price) " +
+    @Query("SELECT new se.antons_skafferi.dataClass.DailyLunch(f.name, f.description, fl.date, fl.price) " +
             "FROM Food f JOIN ForLunch fl ON f.menu_item_id = fl.menu_item_id")
     List<DailyLunch> findLunch();
 
-    @Query("SELECT new se.antons_skafferi.sqlDataClasses.DinnerMenuItem(f.name, f.description, dm.price) " +
+    @Query("SELECT new se.antons_skafferi.dataClass.DinnerMenuItem(f.name, f.description, dm.price) " +
             "FROM Food f JOIN DinnerMenu dm ON f.menu_item_id = dm.menu_item_id")
     List<DinnerMenuItem> findDinnerMenuItems();
 
