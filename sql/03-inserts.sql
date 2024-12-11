@@ -75,7 +75,7 @@ VALUES ('Salad', 'Fresh garden salad', '00:15:00', 1),
 
 -- Insert data into for_lunch table
 INSERT INTO for_lunch (date, price, menu_item_id, lunch_id)
-VALUES ('2023-02-01', 8, 1, 1),
+VALUES ('2024-12-09', 8, 1, 1),
        ('2023-02-02', 9, 2, 2);
 
 -- Insert data into contains table (food and ingredients)
