@@ -3,12 +3,11 @@ package se.antons_skafferi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.antons_skafferi.dataClass.Bookings;
-import se.antons_skafferi.dataClass.DailyLunch;
-import se.antons_skafferi.dataClass.DinnerMenuItem;
-import se.antons_skafferi.dataClass.Food;
+import se.antons_skafferi.dataClass.*;
 import se.antons_skafferi.repository.BookingRepository;
 import se.antons_skafferi.repository.FoodRepository;
+import se.antons_skafferi.repository.OrderRepository;
+import se.antons_skafferi.repository.PersonRepository;
 
 import java.util.List;
 
@@ -19,6 +18,10 @@ public class DatabaseService {
     private FoodRepository foodRepository;
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     /**
      * Get all menu items
@@ -62,5 +65,14 @@ public class DatabaseService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid booking ID"));
         booking.setStatus(status);
         return bookingRepository.save(booking);
+    }
+
+    public Orders addOrder(Orders order) {
+        orderRepository.save(order);
+        return order;
+    }
+
+    public Person addPerson(Person person) {
+        return personRepository.save(person);
     }
 }
