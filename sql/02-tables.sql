@@ -95,7 +95,7 @@ CREATE TABLE tab
 (
     tab_id INT AUTO_INCREMENT NOT NULL,
     opened_at DATETIME NOT NULL,
-    closed_at DATETIME NOT NULL,
+    closed_at DATETIME,
     status ENUM('Open', 'Closed') NOT NULL DEFAULT 'Open',
     last_updated_at DATETIME NOT NULL,
     employee_id INT NOT NULL,

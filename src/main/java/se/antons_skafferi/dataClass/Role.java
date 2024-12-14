@@ -10,24 +10,42 @@ import jakarta.persistence.Table;
 @Table(name = "role")
 public class Role {
     @Id
-    private Integer roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer role_id;
     private String name;
     private String description;
-    private Integer hierarchyLevel;
+    private Integer hierarchy_level;
 
-    public Integer getRoleId() {
-        return roleId;
+    // Getters and setters
+    public Integer getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(Integer role_id) {
+        this.role_id = role_id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public Integer getHierarchyLevel() {
-        return hierarchyLevel;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getHierarchy_level() {
+        return hierarchy_level;
+    }
+
+    public void setHierarchy_level(Integer hierarchy_level) {
+        this.hierarchy_level = hierarchy_level;
     }
 }

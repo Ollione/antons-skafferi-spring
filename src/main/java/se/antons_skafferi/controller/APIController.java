@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import java.sql.Timestamp;
 
 @RestController
 @RequestMapping(path="/api")
@@ -148,4 +149,129 @@ public class APIController {
 
 
 
+    // Orders
+    @GetMapping(path="/orders/all")
+    public List<Orders> getAllOrders() {
+        return databaseService.getAllOrders();
+    }
+    @GetMapping(path="/orders/id/{id}")
+    public Orders getOrdersById(@PathVariable Integer id) {
+        return databaseService.getOrdersById(id);
+    }
+    @GetMapping(path="/orders/date/{date}")
+    public List<Orders> getOrdersByDate(@PathVariable Date date) {
+        return databaseService.getOrdersByDate(date);
+    }
+    @GetMapping(path="/orders/status/{status}")
+    public List<Orders> getOrdersByStatus(@PathVariable Orders.Status status) {
+        return databaseService.getOrdersByStatus(status);
+    }
+
+
+    // Tab
+    @GetMapping(path="/tab/all")
+    public List<Tab> getAllTabs() {
+        return databaseService.getAllTabs();
+    }
+
+    @GetMapping(path="/tab/id/{id}")
+    public Tab getTabById(@PathVariable Integer id) {
+        return databaseService.getTabById(id);
+    }
+
+    // APIController.java
+    @GetMapping(path="/tab/date/{date}")
+    public List<Tab> getTabByDate(@PathVariable String date) {
+        Timestamp timestamp = Timestamp.valueOf(date + " 00:00:00");
+        return databaseService.getTabByDate(timestamp);
+    }
+
+    @GetMapping(path="/tab/status/{status}")
+    public List<Tab> getTabByStatus(@PathVariable Tab.Status status) {
+        return databaseService.getTabByStatus(status);
+    }
+
+    @GetMapping(path="/tab/table/{table}")
+    public List<Tab> getTabByTable(@PathVariable Integer table) {
+        return databaseService.getTabByTable(table);
+    }
+
+
+
+
+    // Drinks
+    @GetMapping(path="/menu/drinks/all")
+    public List<Drinks> getAllDrinks() {
+        return databaseService.getAllDrinks();
+    }
+
+    @GetMapping(path="/menu/drinks/id/{id}")
+    public Drinks getDrinkById(@PathVariable int id) {
+        return databaseService.getDrinkById(id);
+    }
+
+    @GetMapping(path="/menu/drinks/type/{type}")
+    public List<Drinks> getDrinksByType(@PathVariable String type) {
+        return databaseService.getDrinksByType(type);
+    }
+
+
+
+    // Tables
+
+    @GetMapping(path="/tables/all")
+    public List<Tables> getAllTables() {
+        return databaseService.getAllTables();
+    }
+
+    @GetMapping(path="/tables/id/{id}")
+    public Tables getTableById(@PathVariable int id) {
+        return databaseService.getTableById(id);
+    }
+
+    @GetMapping(path="/tables/seats/{room_for_people}")
+    public List<Tables> getTablesByNumberOfSeats(@PathVariable int room_for_people) {
+        return databaseService.getTablesByNumberOfSeats(room_for_people);
+    }
+
+
+
+    // Employees
+
+    @GetMapping(path="/employees/all")
+    public List<Employee> getAllEmployees() {
+        return databaseService.getAllEmployees();
+    }
+
+    @GetMapping(path="/employees/id/{id}")
+    public Employee getEmployeeById(@PathVariable int id) {
+        return databaseService.getEmployeeById(id);
+    }
+
+    @GetMapping(path="/employees/name/{name}")
+    public List<Employee> getEmployeesByName(@PathVariable String name) {
+        return databaseService.getEmployeesByName(name);
+    }
+
+    @GetMapping(path="/employees/email/{email}/password")
+    public String getEmployeePasswordByEmail(@PathVariable String email) {
+        return databaseService.getEmployeePasswordByEmail(email);
+    }
+
+    @GetMapping(path="/employees/{id}/hierarchy")
+    public List<Role> getHierarchyByEmployeeId(@PathVariable int id) {
+        return databaseService.getHierarchyByEmployeeId(id);
+    }
+
+    // Roles
+
+    @GetMapping(path="/roles/all")
+    public List<Role> getAllRoles() {
+        return databaseService.getAllRoles();
+    }
+
+    @GetMapping(path="/roles/id/{id}")
+    public Role getRoleById(@PathVariable int id) {
+        return databaseService.getRoleById(id);
+    }
 }
