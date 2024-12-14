@@ -1,4 +1,3 @@
-// LunchRepository.java
 package se.antons_skafferi.repository;
 
 import org.springframework.data.jpa.repository.Query;
