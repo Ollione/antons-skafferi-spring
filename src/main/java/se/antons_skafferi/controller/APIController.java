@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import se.antons_skafferi.dataClass.Bookings;
-import se.antons_skafferi.dataClass.Person;
+import se.antons_skafferi.dataClass.*;
 import se.antons_skafferi.service.DatabaseService;
 import se.antons_skafferi.repository.PersonRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -26,16 +26,58 @@ public class APIController {
     @Autowired
     private PersonRepository personRepository;
 
-    @GetMapping(path="/menu/{type}")
-    public List<?> getMenuItems(@PathVariable String type) {
-        return switch (type.toLowerCase()) {
-            case "all" -> databaseService.getMenuItems();
-            case "lunch" -> databaseService.getLunchMenuItems();
-            case "dinner" -> databaseService.getDinnerMenuItems();
-            default -> throw new IllegalArgumentException("Invalid menu type: " + type);
-        };
+
+
+    // Lunch items
+    @GetMapping(path="/menu/lunch/all")
+    public List<Lunch> getAllLunchItems() {
+        return databaseService.getAllLunchItems();
+    }
+    @GetMapping(path="/menu/lunch/date/{date}")
+    public List<Lunch> getLunchItemsByDate(@PathVariable Date date) {
+        return databaseService.getLunchItemsByDate(date);
+    }
+    @GetMapping(path="/menu/lunch/week/{week}/year/{year}")
+    public List<Lunch> getLunchItemsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
+        return databaseService.getLunchItemsByWeekAndYear(week, year);
     }
 
+
+
+
+
+    // Dinner items
+    @GetMapping(path="/menu/dinner/all")
+    public List<Dinner> getAllDinnerItems() {
+        return databaseService.getAllDinnerItems();
+    }
+
+    @GetMapping(path="/menu/dinner/type/{type}")
+    public List<Dinner> getDinnerItemsByType(@PathVariable String type) {
+        switch (type.toLowerCase()) {
+            case "forratt":
+                type = "förrätt";
+                break;
+            case "varmratt":
+                type = "varmrätt";
+                break;
+            case "vegetarisk":
+                type = "vegetarisk";
+                break;
+            case "efterratt":
+                type = "efterrätt";
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid dinner type: " + type);
+        }
+        return databaseService.getDinnerItemsByType(type);
+    }
+
+
+
+
+
+// Bookings
     @GetMapping(path="/calendar/bookings/{type}")
     public List<?> getBookings(@PathVariable String type) {
         return switch (type.toLowerCase()) {
@@ -43,9 +85,18 @@ public class APIController {
             default -> throw new IllegalArgumentException("Invalid booking type: " + type);
         };
     }
+    @GetMapping(path="/calendar/bookings/date/{date}")
+    public List<Bookings> getBookingsByDate(@PathVariable Date date) {
+        return databaseService.getBookingsByDate(date);
+    }
+    @GetMapping(path="/calendar/bookings/week/{week}/year/{year}")
+    public List<Bookings> getBookingsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
+        return databaseService.getBookingsByWeekAndYear(week, year);
+    }
 
-    // APIController.java
-// APIController.java
+
+
+
     @PostMapping(path="/calendar/bookings")
     public Bookings addBooking(@RequestBody Bookings booking) {
         if (booking.getPerson() == null) {
@@ -61,11 +112,33 @@ public class APIController {
     }
 
 
-    // APIController.java
     @PostMapping(path="/calendar/bookings/{id}/status")
-    public Bookings updateBookingStatus(@PathVariable Integer id, @RequestBody String status) {
+    public Bookings updateBookingStatus(@PathVariable Integer id, @RequestBody Bookings.Status status) {
         return databaseService.updateBookingStatus(id, status);
     }
+
+
+
+
+
+    // Events
+    @GetMapping(path="/events/all")
+    public List<Events> getAllEvents() {
+        return databaseService.getAllEvents();
+    }
+    @GetMapping("/events/week/{week}/year/{year}")
+    public List<Events> getEventsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
+        return databaseService.getEventsByWeekAndYear(week, year);
+    }
+
+    // Get events by date
+    @GetMapping("/events/date/{date}")
+    public List<Events> getEventsByDate(@PathVariable Date date) {
+        return databaseService.getEventsByDate(date);
+    }
+
+
+
 
 
 

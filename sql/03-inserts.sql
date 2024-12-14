@@ -1,90 +1,14 @@
--- Insert data into person table
-INSERT INTO person (first_name, last_name, date_of_birth, email, phone_number)
-VALUES ('Alice', 'Johnson', '1985-03-15', 'alice.johnson@example.com', '5551234567'),
-       ('Bob', 'Brown', '1978-07-22', 'bob.brown@example.com', '5559876543');
-
--- Insert data into employee table
-INSERT INTO employee (person_id, hiring_date, salary)
-VALUES (1, '2019-05-01', 45000),
-       (2, '2018-11-15', 55000);
-
--- Insert data into role table
-INSERT INTO role (name, description, hierarchy_level, employee_id)
-VALUES ('Waiter', 'Serves food', 3, 1),
-       ('Sous Chef', 'Assists the chef', 2, 2);
-
--- Insert data into lunch table
-INSERT INTO lunch (menu_item_id)
-VALUES (1),
-       (2);
-
--- Insert data into dinner_menu table
-INSERT INTO dinner_menu (menu_item_id, price)
-VALUES (1, 30),
-       (2, 35);
-
--- Insert data into ingredients table
-INSERT INTO ingredients (name)
-VALUES ('Basil'),
-       ('Garlic');
-
--- Insert data into tables table
-INSERT INTO tables (room_for_people)
-VALUES (2),
-       (8);
-
--- Insert data into tab table
-INSERT INTO tab (table_number, employee_id, opened_at, closed_at, status, last_updated_at)
-VALUES (1, 1, '2023-02-01 08:00:00', '2023-02-01 16:00:00', 'Open', '2023-02-01 16:00:00'),
-       (2, 2, '2023-02-02 09:00:00', '2023-02-02 17:00:00', 'Open', '2023-02-02 17:00:00');
-
--- Insert data into orders table
-INSERT INTO orders (table_number, employee_id, date, status, tab_id)
-VALUES (1, 1, '2023-02-01', 'Waiting', 1),
-       (2, 2, '2023-02-02', 'Waiting', 2);
-
--- Insert data into shift table
-INSERT INTO shift (employee_id, shift_date, start_time, end_time)
-VALUES (1, '2023-02-01', '08:00', '16:00'),
-       (2, '2023-02-02', '09:00', '17:00');
-
--- Insert data into bookings table
-INSERT INTO bookings (date, start_time, end_time, person_id, table_number, status)
-VALUES ('2023-02-01', '10:00', '12:00', 1, 1, 'Confirmed'),
-       ('2023-02-02', '11:00', '13:00', 2, 2, 'Confirmed');
-
--- Insert data into events table
-INSERT INTO events (name, description, date, start_time, end_time)
-VALUES ('Conference', 'Tech Conference', '2023-02-01', '14:00', '16:00'),
-       ('Workshop', 'Cooking Workshop', '2023-02-02', '15:00', '17:00');
-
--- Insert data into works_as table
-INSERT INTO works_as (employee_id, role_id)
-VALUES (1, 1),
-       (2, 2);
-
--- Insert data into works_at table
-INSERT INTO works_at (schedule_id, employee_id)
-VALUES (1, 1),
-       (2, 2);
-
--- Insert data into food table
-INSERT INTO food (name, description, time_to_make, dinner_item_id)
-VALUES ('Salad', 'Fresh garden salad', '00:15:00', 1),
-       ('Soup', 'Hearty vegetable soup', '00:20:00', 2);
-
--- Insert data into for_lunch table
-INSERT INTO for_lunch (date, price, menu_item_id, lunch_id)
-VALUES ('2024-12-09', 8, 1, 1),
-       ('2023-02-02', 9, 2, 2);
-
--- Insert data into contains table (food and ingredients)
-INSERT INTO contains (menu_item_id, ingredient_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 1);
-
--- Insert data into food_order table
-INSERT INTO food_order (menu_item_id, order_id)
-VALUES (1, 1),
-       (2, 2);
+INSERT INTO bookings (date, start_time, end_time, table_number, status, person_id) VALUES
+   ('2024-12-13', '18:00:00', '20:00:00', 1, 'Confirmed', 1),
+   ('2024-12-14', '19:00:00', '21:00:00', 2, 'Confirmed', 2),
+   ('2024-12-15', '17:00:00', '19:00:00', 3, 'Cancelled', 3),
+   ('2024-12-16', '18:30:00', '20:30:00', 4, 'Confirmed', 1),
+   ('2024-12-17', '19:30:00', '21:30:00', 5, 'Confirmed', 2),
+   ('2024-12-18', '18:00:00', '20:00:00', 6, 'Cancelled', 3),
+   ('2024-12-19', '20:00:00', '22:00:00', 1, 'Confirmed', 1),
+   ('2024-12-20', '18:00:00', '20:00:00', 2, 'Confirmed', 2),
+   ('2024-12-21', '19:00:00', '21:00:00', 3, 'Cancelled', 3),
+   ('2024-12-22', '17:00:00', '19:00:00', 4, 'Confirmed', 1),
+   ('2024-12-23', '18:30:00', '20:30:00', 5, 'Confirmed', 2),
+   ('2024-12-24', '19:30:00', '21:30:00', 6, 'Confirmed', 3),
+   ('2024-12-25', '18:00:00', '20:00:00', 1, 'Confirmed', 1);

@@ -1,4 +1,3 @@
-// Bookings.java
 package se.antons_skafferi.dataClass;
 
 import jakarta.persistence.*;
@@ -21,7 +20,9 @@ public class Bookings {
     private LocalTime end_time;
 
     private Integer table_number;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
@@ -32,20 +33,38 @@ public class Bookings {
     public Integer getBooking_id() {
         return booking_id;
     }
+    public void setBooking_id(Integer booking_id) {
+        this.booking_id = booking_id;
+    }
     public Date getDate() {
         return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
     public LocalTime getStart_time() {
         return start_time;
     }
+    public void setStart_time(LocalTime start_time) {
+        this.start_time = start_time;
+    }
     public LocalTime getEnd_time() {
         return end_time;
+    }
+    public void setEnd_time(LocalTime end_time) {
+        this.end_time = end_time;
     }
     public Integer getTable_number() {
         return table_number;
     }
-    public String getStatus() {
+    public void setTable_number(Integer table_number) {
+        this.table_number = table_number;
+    }
+    public Status getStatus() {
         return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
     public Person getPerson() {
         return person;
@@ -54,7 +73,8 @@ public class Bookings {
         this.person = person;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public enum Status {
+        Confirmed,
+        Cancelled
     }
 }

@@ -20,6 +20,7 @@ public class Events {
     private Time start_time;
     private Time end_time;
 
+    // Getters
     public Integer getEvent_id() {
         return event_id;
     }
@@ -42,5 +43,30 @@ public class Events {
 
     public Time getEnd_time() {
         return end_time;
+    }
+
+    // Setters
+    public void setEvent_id(Integer event_id) {
+        this.event_id = event_id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setStart_time(Time start_time) {
+        this.start_time = start_time;
+    }
+
+    public void setEnd_time(Time end_time) {
+        this.end_time = end_time;
     }
 }

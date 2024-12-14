@@ -1,31 +1,53 @@
 package se.antons_skafferi.dataClass;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "lunch")
 public class Lunch {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer menu_item_id;
-    private Integer lunch_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer lunchId;
+    private Integer price;
+    private Date date;
 
-    public Integer getMenu_item_id() {
-        return menu_item_id;
-    }
-    public Integer getLunch_id() {
-        return lunch_id;
+    @OneToMany(mappedBy = "lunch", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Items> items;
+
+    // Getters and setters
+    public Integer getLunchId() {
+        return lunchId;
     }
 
-
-    public void setMenu_item_id(Integer menu_item_id) {
-        this.menu_item_id = menu_item_id;
+    public void setLunchId(Integer lunchId) {
+        this.lunchId = lunchId;
     }
-    public void setLunch_id(Integer lunch_id) {
-        this.lunch_id = lunch_id;
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Items> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Items> items) {
+        this.items = items;
     }
 }
