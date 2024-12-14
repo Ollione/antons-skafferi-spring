@@ -11,7 +11,6 @@ import java.sql.Date;
 @Table(name = "person")
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer person_id;
     private String first_name;
     private String last_name;

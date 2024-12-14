@@ -15,7 +15,6 @@ import java.sql.Date;
 @Table(name = "orders")
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer order_id;
     private Integer table_number;
     private Integer employee_id;
