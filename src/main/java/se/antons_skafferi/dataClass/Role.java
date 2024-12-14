@@ -11,13 +11,13 @@ import jakarta.persistence.Table;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer role_id;
+    private Integer roleId;
     private String name;
     private String description;
-    private Integer hierarchy_level;
+    private Integer hierarchyLevel;
 
-    public Integer getRole_id() {
-        return role_id;
+    public Integer getRoleId() {
+        return roleId;
     }
 
     public String getName() {
@@ -28,7 +28,7 @@ public class Role {
         return description;
     }
 
-    public Integer getHierarchy_level() {
-        return hierarchy_level;
+    public Integer getHierarchyLevel() {
+        return hierarchyLevel;
     }
 }

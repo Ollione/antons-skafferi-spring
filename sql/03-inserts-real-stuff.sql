@@ -197,3 +197,24 @@ INSERT INTO items (name, description, lunch_id) VALUES
 ('Älgstek', 'Älgstek med gräddsås och potatis.', 13),
 ('Chokladtryffel', 'Hemgjord chokladtryffel.', 13);
 
+-- Tables
+INSERT INTO tables (table_number, room_for_people) VALUES
+    (1, 4),
+    (2, 4),
+    (3, 4),
+    (4, 4),
+    (5, 4),
+    (6, 4);
+
+
+-- Events
+INSERT INTO events (name, description, date, start_time, end_time) VALUES
+    ('Lucia Celebration', 'Celebrate Lucia with traditional songs and glögg.', '2024-12-14', '18:00:00', '20:00:00'),
+    ('Christmas Wine Tasting', 'Taste a selection of wines perfect for Christmas.', '2024-12-15', '19:00:00', '21:00:00'),
+    ('Christmas Market', 'Enjoy a festive market with local crafts and food.', '2024-12-16', '16:00:00', '20:00:00'),
+    ('Gingerbread House Workshop', 'Build and decorate your own gingerbread house.', '2024-12-17', '14:00:00', '17:00:00'),
+    ('Christmas Carol Concert', 'Join us for an evening of Christmas carols.', '2024-12-18', '18:00:00', '20:00:00'),
+    ('Holiday Cooking Class', 'Learn to cook traditional holiday dishes.', '2024-12-19', '17:00:00', '19:00:00'),
+    ('Santa\'s Grotto', 'Meet Santa and enjoy festive activities.', '2024-12-20', '10:00:00', '16:00:00'),
+    ('Christmas Movie Night', 'Watch classic Christmas movies with popcorn.', '2024-12-21', '18:00:00', '21:00:00'),
+    ('Christmas Eve Dinner', 'Enjoy a special Christmas Eve dinner.', '2024-12-24', '19:00:00', '22:00:00');

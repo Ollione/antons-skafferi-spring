@@ -17,9 +17,7 @@ public class Employee {
     private Integer employee_id;
     private Date hiring_date;
     private Integer salary;
-    private String role_name;
-    private String role_description;
-    private Integer role_hierarchy_level;
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "person_id", nullable = false)
@@ -37,16 +35,8 @@ public class Employee {
         return salary;
     }
 
-    public String getRole_name() {
-        return role_name;
-    }
-
-    public String getRole_description() {
-        return role_description;
-    }
-
-    public Integer getRole_hierarchy_level() {
-        return role_hierarchy_level;
+    public String getPassword() {
+        return password;
     }
 
     public Person getPerson() {
