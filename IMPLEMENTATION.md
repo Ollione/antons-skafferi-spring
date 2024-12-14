@@ -2,33 +2,39 @@
 
 ## GET functions
 ### Order
-- [ ] Order list
-- [ ] Order by id
-- [ ] Order by date
+- [x] Order list
+- [x] Order by id
+- [x] Order by date
+- [x] Order by status
 
 ### Tab
-- [ ] Tab
-- [ ] Tab by id
-- [ ] Tab by date
+- [x] Tab
+- [x] Tab by id
+- [x] Tab by date
+- [x] Tab by status
+- [x] Tab by table
 
 ### Drinks
-- [ ] Drinks list
-- [ ] Drinks by id
+- [x] Drinks list
+- [x] Drinks by id
+- [x] Drinks by type
 
 ### Tables
-- [ ] Tables list
-- [ ] Tables by id
+- [x] Tables list
+- [x] Tables by id
+- [x] Tables by number of seats
 
 ### Employees
-- [ ] Employees list
-- [ ] Employees by id
-- [ ] Employees by name
-- [ ] Employees Password by email
+- [x] Employees list
+- [x] Employees by id
+- [x] Employees by name
+- [x] Employees Password by email
+- [x] Hierachy of employee
 
 ### Role
-- [ ] Role list
-- [ ] Role by id
-- [ ] Hierachy of employee
+- [x] Role list
+- [x] Role by id
+
 
 
 ## POST functions
@@ -117,6 +123,3 @@
 
 ### Shift
 - [ ] Delete shift
-
-
-

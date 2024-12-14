@@ -7,6 +7,7 @@ import se.antons_skafferi.dataClass.*;
 import se.antons_skafferi.repository.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -24,7 +25,16 @@ public class DatabaseService {
     private DinnerRepository dinnerRepository;
     @Autowired
     private EventsRepository eventsRepository;
-
+    @Autowired
+    private TabRepository tabRepository;
+    @Autowired
+    private DrinksRepository drinksRepository;
+    @Autowired
+    private TablesRepository tablesRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     /**
      * Get all menu items
      * @return List of all menu items
@@ -139,4 +149,107 @@ public class DatabaseService {
     }
 
 
+    // Orders
+    public List<Orders> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public Orders getOrdersById(Integer id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+    }
+
+    public List<Orders> getOrdersByDate(Date date) {
+        return orderRepository.findByDate(date);
+    }
+
+    public List<Orders> getOrdersByStatus(Orders.Status status) {
+        return orderRepository.findByStatus(status);
+    }
+
+    // Tabs
+    public List<Tab> getAllTabs() {
+        return tabRepository.findAll();
+    }
+
+    public Tab getTabById(Integer id) {
+        return tabRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid tab ID"));
+    }
+
+    public List<Tab> getTabByDate(Timestamp date) {
+        return tabRepository.findByOpened_at(date);
+    }
+
+    public List<Tab> getTabByStatus(Tab.Status status) {
+        return tabRepository.findByStatus(status);
+    }
+
+    public List<Tab> getTabByTable(Integer table) {
+        return tabRepository.findByTable_number(table);
+    }
+
+
+
+
+    // Drinks
+    public List<Drinks> getAllDrinks() {
+        return drinksRepository.findAll();
+    }
+
+    public Drinks getDrinkById(int id) {
+        return drinksRepository.findById(id);
+    }
+
+    public List<Drinks> getDrinksByType(String type) {
+        return drinksRepository.findByType(type);
+    }
+
+
+
+    // Tables
+
+    public List<Tables> getAllTables() {
+        return tablesRepository.findAll();
+    }
+
+    public Tables getTableById(int id) {
+        return tablesRepository.findById(id);
+    }
+
+    public List<Tables> getTablesByNumberOfSeats(int room_for_people) {
+        return tablesRepository.findByRoom_for_people(room_for_people);
+    }
+
+
+
+    // Employees
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public Employee getEmployeeById(int id) {
+        return employeeRepository.findById(id);
+    }
+
+    public List<Employee> getEmployeesByName(String name) {
+        return employeeRepository.findByName(name);
+    }
+
+    public String getEmployeePasswordByEmail(String email) {
+        return employeeRepository.findPasswordByEmail(email);
+    }
+
+    public List<Role> getHierarchyByEmployeeId(int employee_id) {
+        return employeeRepository.findHierarchyByEmployeeId(employee_id);
+    }
+
+    // Roles
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+
+    public Role getRoleById(int id) {
+        return roleRepository.findById(id);
+    }
 }
