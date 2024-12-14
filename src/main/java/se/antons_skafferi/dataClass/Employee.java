@@ -13,7 +13,6 @@ import java.sql.Date;
 @Table(name = "employee")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer employee_id;
     private Date hiring_date;
     private Integer salary;

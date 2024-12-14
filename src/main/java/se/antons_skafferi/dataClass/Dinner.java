@@ -11,7 +11,6 @@ import java.sql.Time;
 @Table(name = "dinner")
 public class Dinner {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer dinnerId;
     private String name;
     private String description;

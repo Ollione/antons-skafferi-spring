@@ -9,7 +9,6 @@ import java.sql.Date;
 @Table(name = "bookings")
 public class Bookings {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer booking_id;
     private Date date;
 
