@@ -12,7 +12,6 @@ import java.sql.Time;
 @Table(name = "events")
 public class Events {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer event_id;
     private String name;
     private String description;

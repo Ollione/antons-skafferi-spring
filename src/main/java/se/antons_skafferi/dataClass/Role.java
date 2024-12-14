@@ -10,7 +10,6 @@ import jakarta.persistence.Table;
 @Table(name = "role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer roleId;
     private String name;
     private String description;

@@ -15,7 +15,6 @@ import java.sql.Time;
 @Table(name = "shift", uniqueConstraints = @UniqueConstraint(columnNames = "employee_id"))
 public class Shift {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer schedule_id;
     private Date shift_date;
     private Time start_time;

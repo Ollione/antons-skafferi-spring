@@ -9,7 +9,6 @@ import java.util.List;
 @Table(name = "lunch")
 public class Lunch {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer lunchId;
     private Integer price;
     private Date date;

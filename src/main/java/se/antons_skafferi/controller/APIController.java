@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping(path="/api")
 public class APIController {
+
+    Logger logger = Logger.getLogger(APIController.class.getName());
 
     @Autowired
     private DatabaseService databaseService;
@@ -56,20 +59,23 @@ public class APIController {
     public List<Dinner> getDinnerItemsByType(@PathVariable String type) {
         switch (type.toLowerCase()) {
             case "forratt":
-                type = "förrätt";
+                type = "Förrätt";
                 break;
             case "varmratt":
-                type = "varmrätt";
+                type = "Varmrätt";
                 break;
             case "vegetarisk":
-                type = "vegetarisk";
+                type = "Vegetarisk";
                 break;
             case "efterratt":
-                type = "efterrätt";
+                type = "Efterrätt";
                 break;
             default:
                 throw new IllegalArgumentException("Invalid dinner type: " + type);
         }
+//        logger.log(java.util.logging.Level.INFO, "Type: " + type);
+//        List<Dinner> dinnerItems = ;
+//        logger.log(java.util.logging.Level.INFO, "Dinner items: " + dinnerItems);
         return databaseService.getDinnerItemsByType(type);
     }
 

@@ -26,6 +26,13 @@ Windows (untested might not work)
 The server can then be found at localhost:8080
 The menu can be accessed at localhost:8080/api/menu/all
 
+### ÅÄÖ incorrecly displayed
+In case the api endpoints are not showing ÅÄÖ correctly make sure to remove mysql_data before running the docker exec commands.
+You might also need to run the following command to start from a clean slate.
+```
+docker system prune --volumes
+```
+
 
 ## Building
 To build the project to a docker image, first go to the maven tab in IntelliJ and select lifecycle and then package.
