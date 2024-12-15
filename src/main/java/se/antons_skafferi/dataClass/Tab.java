@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @Table(name = "tab")
 public class Tab {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tab_id;
     private Timestamp opened_at;
     private Timestamp closed_at;

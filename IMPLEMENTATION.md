@@ -45,9 +45,8 @@
 - [x] Add status to order
 
 ### Tab
-- [ ] Create tab
-- [ ] Add order to tab
-- [ ] Change status of tab
+- [x] Create tab
+- [x] Change status of tab
 
 ### Drinks
 - [ ] Create drink
