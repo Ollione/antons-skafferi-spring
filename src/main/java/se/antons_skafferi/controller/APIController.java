@@ -241,7 +241,8 @@ public class APIController {
 
 
 
-    // Drinks
+    // Drinks   ############################################################
+    // GET -----------------
     @GetMapping(path="/menu/drinks/all")
     public List<Drinks> getAllDrinks() {
         return databaseService.getAllDrinks();
@@ -256,10 +257,17 @@ public class APIController {
     public List<Drinks> getDrinksByType(@PathVariable String type) {
         return databaseService.getDrinksByType(type);
     }
+    // POST -----------------
+    @PostMapping(path="/menu/drinks")
+    public Drinks addDrink(@RequestBody Drinks drink) {
+        return databaseService.addDrink(drink);
+    }
+    @PostMapping(path="/menu/drinks/{drinkId}/price")
+    public Drinks updateDrinkPrice(@PathVariable int drinkId, @RequestBody Integer price) {
+        return databaseService.updateDrinkPrice(drinkId, price);
+    }
 
-
-
-    // Tables
+    // Tables   ############################################################
 
     @GetMapping(path="/tables/all")
     public List<Tables> getAllTables() {
@@ -278,7 +286,7 @@ public class APIController {
 
 
 
-    // Employees
+    // Employees    ############################################################
 
     @GetMapping(path="/employees/all")
     public List<Employee> getAllEmployees() {
@@ -305,7 +313,7 @@ public class APIController {
         return databaseService.getHierarchyByEmployeeId(id);
     }
 
-    // Roles
+    // Roles    ############################################################
 
     @GetMapping(path="/roles/all")
     public List<Role> getAllRoles() {

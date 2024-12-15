@@ -254,7 +254,8 @@ public class DatabaseService {
     }
 
     public Drinks getDrinkById(int id) {
-        return drinksRepository.findById(id);
+        return drinksRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
     }
 
     public List<Drinks> getDrinksByType(String type) {
@@ -264,8 +265,16 @@ public class DatabaseService {
 
     // POST -----------------
 
+    public Drinks addDrink(Drinks drink) {
+        return drinksRepository.save(drink);
+    }
 
-
+    public Drinks updateDrinkPrice(int drinkId, Integer price) {
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
+        drink.setPrice(price);
+        return drinksRepository.save(drink);
+    }
 
 
 

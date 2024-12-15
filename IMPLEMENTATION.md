@@ -49,7 +49,8 @@
 - [x] Change status of tab
 
 ### Drinks
-- [ ] Create drink
+- [x] Create drink
+- [x] Change price of drink
 
 ### Tables
 - [ ] Create table
