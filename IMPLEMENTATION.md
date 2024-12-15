@@ -41,8 +41,8 @@
 ### Order
 - [x] Create order
 - [x] Add menu item to order
-- [ ] Add drink to order
-- [ ] Add status to order
+- [x] Add drink to order
+- [x] Add status to order
 
 ### Tab
 - [ ] Create tab

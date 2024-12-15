@@ -181,8 +181,8 @@ public class APIController {
     }
 
     @PostMapping(path="/orders/{orderId}/drink")
-    public Orders addDrinkToOrder(@PathVariable int orderId, @RequestBody Drinks drink) {
-        return databaseService.addDrinkToOrder(orderId, drink);
+    public Orders addDrinkToOrder(@PathVariable int orderId, @RequestBody Integer drinkId) {
+        return databaseService.addDrinkToOrder(orderId, drinkId);
     }
 
     @PostMapping(path="/orders/{orderId}/status")

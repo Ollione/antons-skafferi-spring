@@ -38,23 +38,13 @@ public class DatabaseService {
     private RoleRepository roleRepository;
     @Autowired
     private FoodOrderRepository foodOrderRepository;
-
+    @Autowired
+    private DrinkOrderRepository drinkOrderRepository;
     /**
      * Get all menu items
      * @return List of all menu items
      */
-//    public List<Food> getMenuItems() {
-//        return (List<Food>) foodRepository.findAll();
-//    }
 
-//    public List<Items> getLunchMenuItems() {
-//        return LunchRepository.findAll();
-//    }
-
-
-//    public List<String> getItemNamesByLunchDate(java.sql.Date date) {
-//        return lunchRepository.findItemNamesByLunchDate(date);
-//    }
 
     // LUNCH RELATED METHODS------------------------------------------
     public List<Lunch> getAllLunchItems() {
@@ -82,13 +72,7 @@ public class DatabaseService {
 
 
 
-
-
-
-//    public List<DinnerMenuItem> getDinnerMenuItems() {
-//        return foodRepository.findDinnerMenuItems();
-//    }
-
+    // BOOKINGS RELATED METHODS------------------------------------------
     public List<Bookings> getBookings() {
         return bookingRepository.findAll();
     }
@@ -111,7 +95,6 @@ public class DatabaseService {
         this.bookingRepository = bookingRepository;
     }
 
-    // DatabaseService.java
     public Bookings addBooking(Bookings booking) {
         bookingRepository.save(booking);
         return booking;
@@ -126,7 +109,7 @@ public class DatabaseService {
 
 
 
-    // events
+    // Events
 
     public List<Events> getAllEvents() {
         return eventsRepository.findAll();
@@ -149,8 +132,8 @@ public class DatabaseService {
 
 
 
-    // Orders
-    // GET
+    // Orders ############################################################
+    // GET -----------------
     public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -168,7 +151,8 @@ public class DatabaseService {
         return orderRepository.findByStatus(status);
     }
 
-    // POST
+    // POST -----------------
+
     public Orders addOrder(Orders order) {
         return orderRepository.save(order);
     }
@@ -195,10 +179,24 @@ public class DatabaseService {
         return orderRepository.save(order);
     }
 
-    public Orders addDrinkToOrder(int orderId, Drinks drink) {
+    public Orders addDrinkToOrder(int orderId, Integer drinkId) {
         Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
-        order.getDrinks().add(drink);
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
+
+        Optional<DrinkOrder> optionalDrinkOrder = drinkOrderRepository.findByOrderAndDrink(order, drink);
+        DrinkOrder drinkOrder = optionalDrinkOrder.orElseGet(() -> {
+            DrinkOrder newDrinkOrder = new DrinkOrder();
+            newDrinkOrder.setOrder(order);
+            newDrinkOrder.setDrink(drink);
+            newDrinkOrder.setQuantity(0);
+            return newDrinkOrder;
+        });
+
+        drinkOrder.setQuantity(drinkOrder.getQuantity() + 1);
+        drinkOrderRepository.save(drinkOrder);
+
         return orderRepository.save(order);
     }
 
@@ -238,7 +236,8 @@ public class DatabaseService {
 
 
 
-    // Drinks
+    // Drinks ############################################################
+    // GET -----------------
     public List<Drinks> getAllDrinks() {
         return drinksRepository.findAll();
     }
@@ -250,6 +249,12 @@ public class DatabaseService {
     public List<Drinks> getDrinksByType(String type) {
         return drinksRepository.findByType(type);
     }
+
+
+    // POST -----------------
+
+
+
 
 
 

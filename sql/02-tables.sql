@@ -168,11 +168,12 @@ CREATE TABLE food_order
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
 
-CREATE TABLE drink_order
-(
+CREATE TABLE drink_order (
+    id INT AUTO_INCREMENT NOT NULL,
     drink_id INT NOT NULL,
     order_id INT NOT NULL,
-    PRIMARY KEY (drink_id, order_id),
+    quantity INT NOT NULL DEFAULT 1,
+    PRIMARY KEY (id),
     FOREIGN KEY (drink_id) REFERENCES drinks(drink_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );

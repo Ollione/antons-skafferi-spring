@@ -24,13 +24,9 @@ public class Orders {
     @JsonManagedReference
     private List<FoodOrder> foodOrders;
 
-    @ManyToMany
-    @JoinTable(
-            name = "drink_order",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "drink_id")
-    )
-    private List<Drinks> drinks;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<DrinkOrder> drinkOrders;
 
     @ManyToOne
     @JoinColumn(name = "table_number", insertable = false, updatable = false)
@@ -44,7 +40,7 @@ public class Orders {
     @JoinColumn(name = "tab_id", insertable = false, updatable = false)
     private Tab tab;
 
-    // Getters and setters
+
     public Integer getOrder_id() {
         return order_id;
     }
@@ -101,12 +97,12 @@ public class Orders {
         this.foodOrders = foodOrders;
     }
 
-    public List<Drinks> getDrinks() {
-        return drinks;
+    public List<DrinkOrder> getDrinkOrders() {
+        return drinkOrders;
     }
 
-    public void setDrinks(List<Drinks> drinks) {
-        this.drinks = drinks;
+    public void setDrinkOrders(List<DrinkOrder> drinkOrders) {
+        this.drinkOrders = drinkOrders;
     }
 
     public Tables getTable() {
