@@ -9,6 +9,7 @@ import se.antons_skafferi.repository.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatabaseService {
@@ -35,22 +36,15 @@ public class DatabaseService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private FoodOrderRepository foodOrderRepository;
+    @Autowired
+    private DrinkOrderRepository drinkOrderRepository;
     /**
      * Get all menu items
      * @return List of all menu items
      */
-//    public List<Food> getMenuItems() {
-//        return (List<Food>) foodRepository.findAll();
-//    }
 
-//    public List<Items> getLunchMenuItems() {
-//        return LunchRepository.findAll();
-//    }
-
-
-//    public List<String> getItemNamesByLunchDate(java.sql.Date date) {
-//        return lunchRepository.findItemNamesByLunchDate(date);
-//    }
 
     // LUNCH RELATED METHODS------------------------------------------
     public List<Lunch> getAllLunchItems() {
@@ -78,13 +72,7 @@ public class DatabaseService {
 
 
 
-
-
-
-//    public List<DinnerMenuItem> getDinnerMenuItems() {
-//        return foodRepository.findDinnerMenuItems();
-//    }
-
+    // BOOKINGS RELATED METHODS------------------------------------------
     public List<Bookings> getBookings() {
         return bookingRepository.findAll();
     }
@@ -107,7 +95,6 @@ public class DatabaseService {
         this.bookingRepository = bookingRepository;
     }
 
-    // DatabaseService.java
     public Bookings addBooking(Bookings booking) {
         bookingRepository.save(booking);
         return booking;
@@ -122,7 +109,7 @@ public class DatabaseService {
 
 
 
-    // events
+    // Events
 
     public List<Events> getAllEvents() {
         return eventsRepository.findAll();
@@ -139,17 +126,14 @@ public class DatabaseService {
 
 
 
-    public Orders addOrder(Orders order) {
-        orderRepository.save(order);
-        return order;
-    }
-
     public Person addPerson(Person person) {
         return personRepository.save(person);
     }
 
 
-    // Orders
+
+    // Orders ############################################################
+    // GET -----------------
     public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -166,6 +150,66 @@ public class DatabaseService {
     public List<Orders> getOrdersByStatus(Orders.Status status) {
         return orderRepository.findByStatus(status);
     }
+
+    // POST -----------------
+
+    public Orders addOrder(Orders order) {
+        return orderRepository.save(order);
+    }
+
+
+    public Orders addMenuItemToOrder(int orderId, Integer dinnerId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Dinner dinner = dinnerRepository.findById(dinnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid dinner ID"));
+
+        Optional<FoodOrder> optionalFoodOrder = foodOrderRepository.findByOrderAndDinner(order, dinner);
+        FoodOrder foodOrder = optionalFoodOrder.orElseGet(() -> {
+            FoodOrder newFoodOrder = new FoodOrder();
+            newFoodOrder.setOrder(order);
+            newFoodOrder.setDinner(dinner);
+            newFoodOrder.setQuantity(0);
+            return newFoodOrder;
+        });
+
+        foodOrder.setQuantity(foodOrder.getQuantity() + 1);
+        foodOrderRepository.save(foodOrder);
+
+        return orderRepository.save(order);
+    }
+
+    public Orders addDrinkToOrder(int orderId, Integer drinkId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
+
+        Optional<DrinkOrder> optionalDrinkOrder = drinkOrderRepository.findByOrderAndDrink(order, drink);
+        DrinkOrder drinkOrder = optionalDrinkOrder.orElseGet(() -> {
+            DrinkOrder newDrinkOrder = new DrinkOrder();
+            newDrinkOrder.setOrder(order);
+            newDrinkOrder.setDrink(drink);
+            newDrinkOrder.setQuantity(0);
+            return newDrinkOrder;
+        });
+
+        drinkOrder.setQuantity(drinkOrder.getQuantity() + 1);
+        drinkOrderRepository.save(drinkOrder);
+
+        return orderRepository.save(order);
+    }
+
+    public Orders updateOrderStatus(int orderId, Orders.Status status) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        order.setStatus(status);
+        return orderRepository.save(order);
+    }
+
+
+
+
 
     // Tabs
     public List<Tab> getAllTabs() {
@@ -192,7 +236,8 @@ public class DatabaseService {
 
 
 
-    // Drinks
+    // Drinks ############################################################
+    // GET -----------------
     public List<Drinks> getAllDrinks() {
         return drinksRepository.findAll();
     }
@@ -204,6 +249,12 @@ public class DatabaseService {
     public List<Drinks> getDrinksByType(String type) {
         return drinksRepository.findByType(type);
     }
+
+
+    // POST -----------------
+
+
+
 
 
 

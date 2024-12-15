@@ -150,6 +150,7 @@ public class APIController {
 
 
     // Orders
+    // GET
     @GetMapping(path="/orders/all")
     public List<Orders> getAllOrders() {
         return databaseService.getAllOrders();
@@ -166,6 +167,32 @@ public class APIController {
     public List<Orders> getOrdersByStatus(@PathVariable Orders.Status status) {
         return databaseService.getOrdersByStatus(status);
     }
+
+    // POST
+
+    @PostMapping(path="/orders")
+    public Orders createOrder(@RequestBody Orders order) {
+        return databaseService.addOrder(order);
+    }
+
+    @PostMapping(path="/orders/{orderId}/menu-item")
+    public Orders addMenuItemToOrder(@PathVariable int orderId, @RequestBody Integer dinnerId) {
+        return databaseService.addMenuItemToOrder(orderId, dinnerId);
+    }
+
+    @PostMapping(path="/orders/{orderId}/drink")
+    public Orders addDrinkToOrder(@PathVariable int orderId, @RequestBody Integer drinkId) {
+        return databaseService.addDrinkToOrder(orderId, drinkId);
+    }
+
+    @PostMapping(path="/orders/{orderId}/status")
+    public Orders addStatusToOrder(@PathVariable int orderId, @RequestBody Orders.Status status) {
+        return databaseService.updateOrderStatus(orderId, status);
+    }
+
+
+
+
 
 
     // Tab
