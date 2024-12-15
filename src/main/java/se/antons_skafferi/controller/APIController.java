@@ -149,8 +149,8 @@ public class APIController {
 
 
 
-    // Orders
-    // GET
+    // Orders ############################################################
+    // GET  -----------------
     @GetMapping(path="/orders/all")
     public List<Orders> getAllOrders() {
         return databaseService.getAllOrders();
@@ -168,7 +168,7 @@ public class APIController {
         return databaseService.getOrdersByStatus(status);
     }
 
-    // POST
+    // POST -----------------
 
     @PostMapping(path="/orders")
     public Orders createOrder(@RequestBody Orders order) {
@@ -195,7 +195,8 @@ public class APIController {
 
 
 
-    // Tab
+    // Tab  ############################################################
+    // GET -----------------
     @GetMapping(path="/tab/all")
     public List<Tab> getAllTabs() {
         return databaseService.getAllTabs();
@@ -206,7 +207,6 @@ public class APIController {
         return databaseService.getTabById(id);
     }
 
-    // APIController.java
     @GetMapping(path="/tab/date/{date}")
     public List<Tab> getTabByDate(@PathVariable String date) {
         Timestamp timestamp = Timestamp.valueOf(date + " 00:00:00");
@@ -222,6 +222,21 @@ public class APIController {
     public List<Tab> getTabByTable(@PathVariable Integer table) {
         return databaseService.getTabByTable(table);
     }
+
+
+    // POST -----------------
+    @PostMapping(path="/tab")
+    public Tab createTab(@RequestBody Tab tab) {
+        return databaseService.addTab(tab);
+    }
+
+    @PostMapping(path="/tab/{tabId}/status")
+    public Tab updateTabStatus(@PathVariable int tabId, @RequestBody Tab.Status status) {
+        return databaseService.updateTabStatus(tabId, status);
+    }
+
+
+
 
 
 

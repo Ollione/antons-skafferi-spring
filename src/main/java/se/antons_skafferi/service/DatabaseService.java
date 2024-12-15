@@ -211,7 +211,8 @@ public class DatabaseService {
 
 
 
-    // Tabs
+    // Tabs ############################################################
+    // GET -----------------
     public List<Tab> getAllTabs() {
         return tabRepository.findAll();
     }
@@ -233,6 +234,16 @@ public class DatabaseService {
         return tabRepository.findByTable_number(table);
     }
 
+    // POST -----------------
+    public Tab addTab(Tab tab) {
+        return tabRepository.save(tab);
+    }
+    public Tab updateTabStatus(int tabId, Tab.Status status) {
+        Tab tab = tabRepository.findById(tabId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid tab ID"));
+        tab.setStatus(status);
+        return tabRepository.save(tab);
+    }
 
 
 
