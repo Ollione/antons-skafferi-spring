@@ -9,6 +9,7 @@ import se.antons_skafferi.repository.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DatabaseService {
@@ -35,6 +36,9 @@ public class DatabaseService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private FoodOrderRepository foodOrderRepository;
+
     /**
      * Get all menu items
      * @return List of all menu items
@@ -139,17 +143,14 @@ public class DatabaseService {
 
 
 
-    public Orders addOrder(Orders order) {
-        orderRepository.save(order);
-        return order;
-    }
-
     public Person addPerson(Person person) {
         return personRepository.save(person);
     }
 
 
+
     // Orders
+    // GET
     public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -166,6 +167,51 @@ public class DatabaseService {
     public List<Orders> getOrdersByStatus(Orders.Status status) {
         return orderRepository.findByStatus(status);
     }
+
+    // POST
+    public Orders addOrder(Orders order) {
+        return orderRepository.save(order);
+    }
+
+
+    public Orders addMenuItemToOrder(int orderId, Integer dinnerId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Dinner dinner = dinnerRepository.findById(dinnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid dinner ID"));
+
+        Optional<FoodOrder> optionalFoodOrder = foodOrderRepository.findByOrderAndDinner(order, dinner);
+        FoodOrder foodOrder = optionalFoodOrder.orElseGet(() -> {
+            FoodOrder newFoodOrder = new FoodOrder();
+            newFoodOrder.setOrder(order);
+            newFoodOrder.setDinner(dinner);
+            newFoodOrder.setQuantity(0);
+            return newFoodOrder;
+        });
+
+        foodOrder.setQuantity(foodOrder.getQuantity() + 1);
+        foodOrderRepository.save(foodOrder);
+
+        return orderRepository.save(order);
+    }
+
+    public Orders addDrinkToOrder(int orderId, Drinks drink) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        order.getDrinks().add(drink);
+        return orderRepository.save(order);
+    }
+
+    public Orders updateOrderStatus(int orderId, Orders.Status status) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        order.setStatus(status);
+        return orderRepository.save(order);
+    }
+
+
+
+
 
     // Tabs
     public List<Tab> getAllTabs() {

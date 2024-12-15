@@ -39,8 +39,8 @@
 
 ## POST functions
 ### Order
-- [ ] Create order
-- [ ] Add menu item to order
+- [x] Create order
+- [x] Add menu item to order
 - [ ] Add drink to order
 - [ ] Add status to order
 

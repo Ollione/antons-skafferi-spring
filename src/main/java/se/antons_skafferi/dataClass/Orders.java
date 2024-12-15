@@ -1,28 +1,36 @@
 package se.antons_skafferi.dataClass;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Orders {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer order_id;
-    private Integer table_number;
-    private Integer employee_id;
     private Date date;
-    private Integer tab_id;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private Integer employee_id;
+    private Integer table_number;
+    private Integer tab_id;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<FoodOrder> foodOrders;
+
+    @ManyToMany
+    @JoinTable(
+            name = "drink_order",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "drink_id")
+    )
+    private List<Drinks> drinks;
 
     @ManyToOne
     @JoinColumn(name = "table_number", insertable = false, updatable = false)
@@ -45,12 +53,20 @@ public class Orders {
         this.order_id = order_id;
     }
 
-    public Integer getTable_number() {
-        return table_number;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTable_number(Integer table_number) {
-        this.table_number = table_number;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Integer getEmployee_id() {
@@ -61,12 +77,12 @@ public class Orders {
         this.employee_id = employee_id;
     }
 
-    public Date getDate() {
-        return date;
+    public Integer getTable_number() {
+        return table_number;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTable_number(Integer table_number) {
+        this.table_number = table_number;
     }
 
     public Integer getTab_id() {
@@ -77,12 +93,20 @@ public class Orders {
         this.tab_id = tab_id;
     }
 
-    public Status getStatus() {
-        return status;
+    public List<FoodOrder> getFoodOrders() {
+        return foodOrders;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setFoodOrders(List<FoodOrder> foodOrders) {
+        this.foodOrders = foodOrders;
+    }
+
+    public List<Drinks> getDrinks() {
+        return drinks;
+    }
+
+    public void setDrinks(List<Drinks> drinks) {
+        this.drinks = drinks;
     }
 
     public Tables getTable() {
