@@ -1,20 +1,22 @@
+// Items.java
 package se.antons_skafferi.dataClass;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
 public class Items {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer item_id;
     private String name;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "lunch_id", nullable = false)
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonBackReference
-    private Lunch lunch;
+    private List<LunchItems> lunchItems;
 
     // Getters and setters
     public Integer getItem_id() {
@@ -41,11 +43,11 @@ public class Items {
         this.description = description;
     }
 
-    public Lunch getLunch() {
-        return lunch;
+    public List<LunchItems> getLunchItems() {
+        return lunchItems;
     }
 
-    public void setLunch(Lunch lunch) {
-        this.lunch = lunch;
+    public void setLunchItems(List<LunchItems> lunchItems) {
+        this.lunchItems = lunchItems;
     }
 }

@@ -103,11 +103,7 @@ INSERT INTO person (first_name, last_name, date_of_birth, email, phone_number) V
     ('Emma', 'Karlsson', '1990-07-25', 'emma.karlsson@example.com', '0709876543'),
     ('Johan', 'Andersson', '1995-11-30', 'johan.andersson@example.com', '0705678912');
 
--- Insert into employee table
-INSERT INTO employee (hiring_date, salary, password, person_id) VALUES
-    ('2020-01-15', 45000, 'securepassword123', 1), -- Anton
-    ('2021-06-01', 35000, 'passwordkitchen456', 2), -- Emma
-    ('2022-03-20', 30000, 'passwordservice789', 3); -- Johan
+
 
 -- Insert into role table (if not already added)
 INSERT INTO role (name, description, hierarchy_level) VALUES
@@ -115,88 +111,136 @@ INSERT INTO role (name, description, hierarchy_level) VALUES
     ('Kock', 'Ansvarar för matlagning och köket.', 2),
     ('Servitör', 'Ansvarar för servering och kundservice.', 3);
 
--- Assign roles using works_as table
-INSERT INTO works_as (employee_id, role_id) VALUES
-    (1, 1), -- Anton as Chef
-    (2, 2), -- Emma as Cook
-    (3, 3); -- Johan as Waiter
+-- Insert into employee table
+INSERT INTO employee (hiring_date, salary, password, person_id, role_id) VALUES
+    ('2024-01-01', 50000, 'password123', 1, 1), -- Anton as Chef
+    ('2024-01-02', 40000, 'password456', 2, 2), -- Emma as Cook
+    ('2024-01-03', 30000, 'password789', 3, 3); -- Johan as Waiter
 
 
 -- Insert lunches into lunch table
-INSERT INTO lunch (price, date) VALUES
-    (120, '2024-12-13'), (130, '2024-12-14'), (125, '2024-12-15'),
-    (135, '2024-12-16'), (140, '2024-12-17'), (130, '2024-12-18'),
-    (145, '2024-12-19'), (150, '2024-12-20'), (140, '2024-12-21'),
-    (135, '2024-12-22'), (150, '2024-12-23'), (160, '2024-12-24'),
-    (165, '2024-12-25');
+INSERT INTO lunch (price, date)
+VALUES (120, '2024-12-13'),
+       (130, '2024-12-14'),
+       (125, '2024-12-15'),
+       (135, '2024-12-16'),
+       (140, '2024-12-17'),
+       (130, '2024-12-18'),
+       (145, '2024-12-19'),
+       (150, '2024-12-20'),
+       (140, '2024-12-21'),
+       (135, '2024-12-22'),
+       (150, '2024-12-23'),
+       (160, '2024-12-24'),
+       (165, '2024-12-25');
 
--- Insert items into items table for each lunch
-INSERT INTO items (name, description, lunch_id) VALUES
+-- Insert items into items table
+INSERT INTO items (name, description) VALUES
 -- December 13
-('Potatissoppa', 'Krämig potatissoppa med purjolök.', 1),
-('Rostad Kyckling', 'Kyckling med rostad potatis och gräddsås.', 1),
-('Vaniljpannacotta', 'Vaniljpannacotta med hallon.', 1),
+('Potatissoppa', 'Krämig potatissoppa med purjolök.'),
+('Rostad Kyckling', 'Kyckling med rostad potatis och gräddsås.'),
+('Vaniljpannacotta', 'Vaniljpannacotta med hallon.'),
 
 -- December 14
-('Fisksoppa', 'Soppa med lax, torsk och dill.', 2),
-('Grönsaksgratäng', 'Grönsaksgratäng med rotfrukter och ost.', 2),
-('Äppelpaj', 'Klassisk äppelpaj med vaniljsås.', 2),
+('Fisksoppa', 'Soppa med lax, torsk och dill.'),
+('Grönsaksgratäng', 'Grönsaksgratäng med rotfrukter och ost.'),
+('Äppelpaj', 'Klassisk äppelpaj med vaniljsås.'),
 
 -- December 15
-('Tomatsoppa', 'Tomatsoppa toppad med färsk basilika.', 3),
-('Köttfärsbiffar', 'Köttfärsbiffar med potatismos och lingon.', 3),
-('Kladdkaka', 'Svensk chokladkaka med vispad grädde.', 3),
+('Tomatsoppa', 'Tomatsoppa toppad med färsk basilika.'),
+('Köttfärsbiffar', 'Köttfärsbiffar med potatismos och lingon.'),
+('Kladdkaka', 'Svensk chokladkaka med vispad grädde.'),
 
 -- December 16
-('Broccolisoppa', 'Krämig broccolisoppa med vitlökskrutonger.', 4),
-('Fiskgryta', 'Fiskgryta med saffran och grönsaker.', 4),
-('Blåbärspaj', 'Blåbärspaj med vaniljsås.', 4),
+('Broccolisoppa', 'Krämig broccolisoppa med vitlökskrutonger.'),
+('Fiskgryta', 'Fiskgryta med saffran och grönsaker.'),
+('Blåbärspaj', 'Blåbärspaj med vaniljsås.'),
 
 -- December 17
-('Spenatsoppa', 'Grön spenatsoppa med ägg.', 5),
-('Köttbullar', 'Köttbullar med potatismos och lingonsylt.', 5),
-('Fruktsallad', 'Fruktsallad med färska bär.', 5),
+('Spenatsoppa', 'Grön spenatsoppa med ägg.'),
+('Köttbullar', 'Köttbullar med potatismos och lingonsylt.'),
+('Fruktsallad', 'Fruktsallad med färska bär.'),
 
 -- December 18
-('Morotssoppa', 'Soppa med morot och ingefära.', 6),
-('Pasta Carbonara', 'Klassisk pasta med bacon och parmesan.', 6),
-('Chokladmousse', 'Luftig chokladmousse med apelsin.', 6),
+('Morotssoppa', 'Soppa med morot och ingefära.'),
+('Pasta Carbonara', 'Klassisk pasta med bacon och parmesan.'),
+('Chokladmousse', 'Luftig chokladmousse med apelsin.'),
 
 -- December 19
-('Linsgryta', 'Linsgryta med tomat och kokosmjölk.', 7),
-('Grillad Kyckling', 'Grillad kyckling med potatisgratäng.', 7),
-('Vaniljglass', 'Vaniljglass med bärsås.', 7),
+('Linsgryta', 'Linsgryta med tomat och kokosmjölk.'),
+('Grillad Kyckling', 'Grillad kyckling med potatisgratäng.'),
+('Vaniljglass', 'Vaniljglass med bärsås.'),
 
 -- December 20
-('Pumpasoppa', 'Krämig pumpasoppa med chili.', 8),
-('Biff Stroganoff', 'Biff Stroganoff med ris.', 8),
-('Pepparkakor', 'Juliga pepparkakor med blåmögelost.', 8),
+('Pumpasoppa', 'Krämig pumpasoppa med chili.'),
+('Biff Stroganoff', 'Biff Stroganoff med ris.'),
+('Pepparkakor', 'Juliga pepparkakor med blåmögelost.'),
 
 -- December 21
-('Grön ärtsoppa', 'Ärtsoppa med mynta.', 9),
-('Laxfilé', 'Stekt laxfilé med dillsås och potatis.', 9),
-('Saffranspannkaka', 'Saffranspannkaka med sylt.', 9),
+('Grön ärtsoppa', 'Ärtsoppa med mynta.'),
+('Laxfilé', 'Stekt laxfilé med dillsås och potatis.'),
+('Saffranspannkaka', 'Saffranspannkaka med sylt.'),
 
 -- December 22
-('Sellerisoppa', 'Krämig sellerisoppa med parmesan.', 10),
-('Kalops', 'Kalops med kokt potatis.', 10),
-('Risgrynsgröt', 'Julgröt med kanel och socker.', 10),
+('Sellerisoppa', 'Krämig sellerisoppa med parmesan.'),
+('Kalops', 'Kalops med kokt potatis.'),
+('Risgrynsgröt', 'Julgröt med kanel och socker.'),
 
 -- December 23
-('Gulaschsoppa', 'Klassisk gulaschsoppa med nötkött.', 11),
-('Grillade Revbensspjäll', 'Revbensspjäll med potatis och kål.', 11),
-('Julgodis', 'Hemgjort julgodis.', 11),
+('Gulaschsoppa', 'Klassisk gulaschsoppa med nötkött.'),
+('Grillade Revbensspjäll', 'Revbensspjäll med potatis och kål.'),
+('Julgodis', 'Hemgjort julgodis.'),
 
 -- December 24
-('Klar Grönsakssoppa', 'Lätt grönsakssoppa med rotfrukter.', 12),
-('Julbord', 'Klassiskt svenskt julbord med alla tillbehör.', 12),
-('Julens Dessertbord', 'Olika juliga desserter.', 12),
+('Klar Grönsakssoppa', 'Lätt grönsakssoppa med rotfrukter.'),
+('Julbord', 'Klassiskt svenskt julbord med alla tillbehör.'),
+('Julens Dessertbord', 'Olika juliga desserter.'),
 
 -- December 25
-('Svampsoppa', 'Krämig svampsoppa med vitlök.', 13),
-('Älgstek', 'Älgstek med gräddsås och potatis.', 13),
-('Chokladtryffel', 'Hemgjord chokladtryffel.', 13);
+('Svampsoppa', 'Krämig svampsoppa med vitlök.'),
+('Älgstek', 'Älgstek med gräddsås och potatis.'),
+('Chokladtryffel', 'Hemgjord chokladtryffel.');
 
+-- Insert items into lunch_items table
+INSERT INTO lunch_items (lunch_id, item_id) VALUES
+-- December 13
+(1, 1), (1, 2), (1, 3),
+
+-- December 14
+(2, 4), (2, 5), (2, 6),
+
+-- December 15
+(3, 7), (3, 8), (3, 9),
+
+-- December 16
+(4, 10), (4, 11), (4, 12),
+
+-- December 17
+(5, 13), (5, 14), (5, 15),
+
+-- December 18
+(6, 16), (6, 17), (6, 18),
+
+-- December 19
+(7, 19), (7, 20), (7, 21),
+
+-- December 20
+(8, 22), (8, 23), (8, 24),
+
+-- December 21
+(9, 25), (9, 26), (9, 27),
+
+-- December 22
+(10, 28), (10, 29), (10, 30),
+
+-- December 23
+(11, 31), (11, 32), (11, 33),
+
+-- December 24
+(12, 34), (12, 35), (12, 36),
+
+-- December 25
+(13, 37), (13, 38), (13, 39);
 -- Tables
 INSERT INTO tables (table_number, room_for_people) VALUES
     (1, 4),

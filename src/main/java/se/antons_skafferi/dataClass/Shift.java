@@ -1,27 +1,21 @@
 package se.antons_skafferi.dataClass;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "shift", uniqueConstraints = @UniqueConstraint(columnNames = "employee_id"))
+@Table(name = "shift")
 public class Shift {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer schedule_id;
     private Date shift_date;
     private Time start_time;
     private Time end_time;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false, unique = true)
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
     // Getters and setters
