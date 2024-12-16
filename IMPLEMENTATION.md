@@ -49,35 +49,36 @@
 - [x] Change status of tab
 
 ### Drinks
-- [ ] Create drink
+- [x] Create drink
+- [x] Change price of drink
 
 ### Tables
-- [ ] Create table
+- [x] Create table
 
 ### Employees
-- [ ] Create employee
-- [ ] Change password of employee
-- [ ] Change role of employee
+- [x] Create employee
+- [x] Change password of employee
+- [x] Change role of employee
 
 ### Role
-- [ ] Create role
-- [ ] Change hierachy of role
+- [x] Create role
+- [x] Change hierachy of role
 
 ### Person
-- [ ] Create person
+- [x] Create person
 
 ### Dinner
-- [ ] Add dinner item
+- [x] Add dinner item
 
 ### Lunch
-- [ ] Add lunch item
+- [x] Add lunch item
 
 ### Booking
-- [ ] Create booking
-- [ ] Change status of booking
+- [x] Create booking
+- [x] Change status of booking
 
 ### Event
-- [ ] Create event
+- [x] Create event
 
 ### Shift
 - [ ] Create shift

@@ -2,11 +2,10 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- Drop all tables in the database
-DROP TABLE IF EXISTS food_order;
 DROP TABLE IF EXISTS drink_order;
+DROP TABLE IF EXISTS food_order;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS works_shift;
-DROP TABLE IF EXISTS works_as;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS drinks;
 DROP TABLE IF EXISTS tab;
@@ -14,11 +13,12 @@ DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS shift;
 DROP TABLE IF EXISTS tables;
+DROP TABLE IF EXISTS lunch_items;
 DROP TABLE IF EXISTS lunch;
 DROP TABLE IF EXISTS dinner;
-DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS role;
 
--- Re-enable foreign key checks
+-- Enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;

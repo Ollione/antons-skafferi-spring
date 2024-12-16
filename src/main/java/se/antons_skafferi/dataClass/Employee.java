@@ -1,18 +1,14 @@
+// Employee.java
 package se.antons_skafferi.dataClass;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "employee")
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer employee_id;
     private Date hiring_date;
     private Integer salary;
@@ -22,6 +18,11 @@ public class Employee {
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
+    // Getters and setters
     public Integer getEmployee_id() {
         return employee_id;
     }
@@ -40,5 +41,21 @@ public class Employee {
 
     public Person getPerson() {
         return person;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

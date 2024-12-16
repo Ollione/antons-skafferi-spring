@@ -5,18 +5,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import java.sql.Date;
 
 @Entity
 @Table(name = "person")
 public class Person {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer person_id;
     private String first_name;
     private String last_name;
     private Date date_of_birth;
+
+    @Column(unique = true)
     private String email;
-    private String phone_number;
+
+    @Column(unique = true)
+    private String phone_number; // Ensure this matches the method name in the repository
 
     // Getters and setters
     public Integer getPerson_id() {

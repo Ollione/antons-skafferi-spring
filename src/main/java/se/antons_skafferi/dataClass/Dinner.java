@@ -11,6 +11,7 @@ import java.sql.Time;
 @Table(name = "dinner")
 public class Dinner {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dinnerId;
     private String name;
     private String description;

@@ -40,13 +40,52 @@ public class DatabaseService {
     private FoodOrderRepository foodOrderRepository;
     @Autowired
     private DrinkOrderRepository drinkOrderRepository;
+    @Autowired
+    private ItemsRepository itemsRepository;
+
+
+
     /**
      * Get all menu items
      * @return List of all menu items
      */
 
 
-    // LUNCH RELATED METHODS------------------------------------------
+
+    // PERSON RELATED METHODS ##########################################
+    // GET -----------------
+    public List<Person> getAllPersons() {
+        return personRepository.findAll();
+    }
+    // POST -----------------
+// DatabaseService.java
+    public Person addPerson(Person person) {
+        if (personRepository.existsByEmail(person.getEmail())) {
+            throw new IllegalArgumentException("Invalid email: Email already exists");
+        }
+        if (personRepository.existsByPhoneNumber(person.getPhone_number())) {
+            throw new IllegalArgumentException("Invalid phone number: Phone number already exists");
+        }
+        return personRepository.save(person);
+    }
+
+    // ITEMS ############################################################
+    // GET -----------------
+    public List<Items> getAllItems() {
+        return itemsRepository.findAll();
+    }
+
+    // POST -----------------
+    public Items addItem(Items item) {
+        return itemsRepository.save(item);
+    }
+
+
+
+
+
+    // LUNCH ##########################################
+    // GET -----------------
     public List<Lunch> getAllLunchItems() {
         return lunchRepository.findAllWithItems();
     }
@@ -59,20 +98,42 @@ public class DatabaseService {
         return lunchRepository.findByWeekAndYear(week, year);
     }
 
-    // END OF LUNCH RELATED METHODS -----------------------------------
+    // POST -----------------
+    public Lunch addLunchItem(Lunch lunch) {
+        return lunchRepository.save(lunch);
+    }
+    public Lunch addItemsToLunch(Integer lunchId, List<Integer> itemIds) {
+        Lunch lunch = lunchRepository.findById(lunchId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid lunch ID"));
 
-    // DINNER RELATED METHODS------------------------------------------
+        for (Integer itemId : itemIds) {
+            Items item = itemsRepository.findById(itemId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid item ID"));
+            LunchItems lunchItem = new LunchItems();
+            lunchItem.setLunch(lunch);
+            lunchItem.setItem(item);
+            lunch.getLunchItems().add(lunchItem);
+        }
+
+        return lunchRepository.save(lunch);
+    }
+
+    // DINNER ############################################################
+    // GET -----------------
     public List<Dinner> getAllDinnerItems() {
         return dinnerRepository.findAll();
     }
     public List<Dinner> getDinnerItemsByType(String type) {
         return dinnerRepository.findByType(type);
     }
+    // POST -----------------
+    public Dinner addDinnerItem(Dinner dinner) {
+        return dinnerRepository.save(dinner);
+    }
 
 
 
-
-    // BOOKINGS RELATED METHODS------------------------------------------
+    // BOOKINGS ############################################################
     public List<Bookings> getBookings() {
         return bookingRepository.findAll();
     }
@@ -84,20 +145,17 @@ public class DatabaseService {
         return bookingRepository.findByWeekAndYear(week, year);
     }
 
-
-    public List<Bookings> getAddBookings() {
-        // Implement the logic to get added bookings
-        // For now, returning all bookings as a placeholder
-        return bookingRepository.findAll();
-    }
-
-    public void setBookingRepository(BookingRepository bookingRepository) {
-        this.bookingRepository = bookingRepository;
-    }
-
     public Bookings addBooking(Bookings booking) {
-        bookingRepository.save(booking);
-        return booking;
+        if (booking.getPerson() == null) {
+            throw new IllegalArgumentException("Person information is missing");
+        }
+        if (booking.getPerson().getPerson_id() == null) {
+            throw new IllegalArgumentException("Person ID is missing");
+        }
+        Person person = personRepository.findById(booking.getPerson().getPerson_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid person ID"));
+        booking.setPerson(person);
+        return bookingRepository.save(booking);
     }
 
     public Bookings updateBookingStatus(Integer id, Bookings.Status status) {
@@ -109,8 +167,8 @@ public class DatabaseService {
 
 
 
-    // Events
-
+    // Events   ############################################################
+    // GET -----------------
     public List<Events> getAllEvents() {
         return eventsRepository.findAll();
     }
@@ -124,12 +182,10 @@ public class DatabaseService {
         return eventsRepository.findByDate(date);
     }
 
-
-
-    public Person addPerson(Person person) {
-        return personRepository.save(person);
+    // POST -----------------
+    public Events addEvent(Events event) {
+        return eventsRepository.save(event);
     }
-
 
 
     // Orders ############################################################
@@ -254,7 +310,8 @@ public class DatabaseService {
     }
 
     public Drinks getDrinkById(int id) {
-        return drinksRepository.findById(id);
+        return drinksRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
     }
 
     public List<Drinks> getDrinksByType(String type) {
@@ -264,13 +321,21 @@ public class DatabaseService {
 
     // POST -----------------
 
+    public Drinks addDrink(Drinks drink) {
+        return drinksRepository.save(drink);
+    }
+
+    public Drinks updateDrinkPrice(int drinkId, Integer price) {
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
+        drink.setPrice(price);
+        return drinksRepository.save(drink);
+    }
 
 
 
-
-
-    // Tables
-
+    // Tables   ############################################################
+    // GET -----------------
     public List<Tables> getAllTables() {
         return tablesRepository.findAll();
     }
@@ -283,15 +348,24 @@ public class DatabaseService {
         return tablesRepository.findByRoom_for_people(room_for_people);
     }
 
+    // POST -----------------
+    public Tables addTable(Tables table) {
+        return tablesRepository.save(table);
+    }
 
 
-    // Employees
+
+
+
+    // Employees    ############################################################
+    // GET -----------------
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
     public Employee getEmployeeById(int id) {
-        return employeeRepository.findById(id);
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID"));
     }
 
     public List<Employee> getEmployeesByName(String name) {
@@ -306,12 +380,71 @@ public class DatabaseService {
         return employeeRepository.findHierarchyByEmployeeId(employee_id);
     }
 
+    // POST -----------------
+    public Employee addEmployee(Employee employee) {
+        Person person = employee.getPerson(); // Check if person exists
+        if (person.getPerson_id() == null || !personRepository.existsById(person.getPerson_id())) {
+            throw new IllegalArgumentException("Invalid person ID");
+        }
+
+        // Check if person ID is already associated with an existing employee
+        if (employeeRepository.existsByPersonId(person.getPerson_id())) {
+            throw new IllegalArgumentException("Person ID is already in use");
+        }
+
+        Role role = employee.getRole(); // Check if role exists
+        if (role.getRole_id() == null || !roleRepository.existsById(role.getRole_id())) {
+            throw new IllegalArgumentException("Invalid role ID");
+        }
+
+        return employeeRepository.save(employee);
+    }
+    // Update employee password
+    public Employee updateEmployeePassword(int employeeId, String password) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID"));
+        employee.setPassword(password);
+        return employeeRepository.save(employee);
+    }
+
+    // Change employee role
+    public Employee changeEmployeeRole(int employeeId, int roleId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID"));
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid role ID"));
+
+        employee.setRole(role);
+        return employeeRepository.save(employee);
+    }
+
+
+
     // Roles
+    // GET -----------------
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
     public Role getRoleById(int id) {
-        return roleRepository.findById(id);
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid role ID"));
     }
+
+    // POST -----------------
+    // Add a new role
+    public Role addRole(Role role) {
+        return roleRepository.save(role);
+    }
+
+    // Update the hierarchy of a role
+    public Role updateRoleHierarchy(int roleId, Integer hierarchyLevel) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid role ID"));
+        role.setHierarchy_level(hierarchyLevel);
+        return roleRepository.save(role);
+    }
+
+
+
 }

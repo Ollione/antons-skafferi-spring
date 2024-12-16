@@ -12,6 +12,7 @@ import java.sql.Time;
 @Table(name = "events")
 public class Events {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer event_id;
     private String name;
     private String description;

@@ -2,6 +2,8 @@
 package se.antons_skafferi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,43 @@ public class APIController {
 
 
 
-    // Lunch items
+
+    // Persons ############################################################
+    // GET -----------------
+    @GetMapping(path="/persons/all")
+    public List<Person> getAllPersons() {
+        return databaseService.getAllPersons();
+    }
+
+    // POST -----------------
+// APIController.java
+    @PostMapping(path="/persons")
+    public ResponseEntity<?> createPerson(@RequestBody Person person) {
+        try {
+            Person createdPerson = databaseService.addPerson(person);
+            return ResponseEntity.ok(createdPerson);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // Items ############################################################
+    // GET -----------------
+    @GetMapping(path="/items/all")
+    public List<Items> getAllItems() {
+        return databaseService.getAllItems();
+    }
+
+    // POST -----------------
+    @PostMapping(path="/items")
+    public Items addItem(@RequestBody Items item) {
+        return databaseService.addItem(item);
+    }
+
+
+
+    // Lunch items  ############################################################
+    // GET -----------------
     @GetMapping(path="/menu/lunch/all")
     public List<Lunch> getAllLunchItems() {
         return databaseService.getAllLunchItems();
@@ -45,12 +83,20 @@ public class APIController {
     public List<Lunch> getLunchItemsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
         return databaseService.getLunchItemsByWeekAndYear(week, year);
     }
+    // POST -----------------
+    @PostMapping(path="/menu/lunch")
+    public Lunch addLunchItem(@RequestBody Lunch lunch) {
+        return databaseService.addLunchItem(lunch);
+    }
+    @PostMapping(path="/menu/lunch/{lunchId}/items")
+    public Lunch addItemsToLunch(@PathVariable Integer lunchId, @RequestBody List<Integer> itemIds) {
+        return databaseService.addItemsToLunch(lunchId, itemIds);
+    }
 
 
 
-
-
-    // Dinner items
+    // Dinner items ############################################################
+    // GET -----------------
     @GetMapping(path="/menu/dinner/all")
     public List<Dinner> getAllDinnerItems() {
         return databaseService.getAllDinnerItems();
@@ -82,9 +128,16 @@ public class APIController {
 
 
 
+    // POST -----------------
+    @PostMapping(path="/menu/dinner")
+    public Dinner addDinnerItem(@RequestBody Dinner dinner) {
+        return databaseService.addDinnerItem(dinner);
+    }
 
 
-// Bookings
+
+// Bookings ############################################################
+    // GET -----------------
     @GetMapping(path="/calendar/bookings/{type}")
     public List<?> getBookings(@PathVariable String type) {
         return switch (type.toLowerCase()) {
@@ -102,20 +155,12 @@ public class APIController {
     }
 
 
-
+    // POST -----------------
 
     @PostMapping(path="/calendar/bookings")
-    public Bookings addBooking(@RequestBody Bookings booking) {
-        if (booking.getPerson() == null) {
-            throw new IllegalArgumentException("Person information is missing");
-        }
-        if (booking.getPerson().getPerson_id() == null) {
-            throw new IllegalArgumentException("Person ID is missing");
-        }
-        Person person = personRepository.findById(booking.getPerson().getPerson_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid person ID"));
-        booking.setPerson(person);
-        return databaseService.addBooking(booking);
+    public ResponseEntity<Bookings> addBooking(@RequestBody Bookings booking) {
+        Bookings createdBooking = databaseService.addBooking(booking);
+        return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 
 
@@ -128,7 +173,8 @@ public class APIController {
 
 
 
-    // Events
+    // Events   ############################################################
+    // GET -----------------
     @GetMapping(path="/events/all")
     public List<Events> getAllEvents() {
         return databaseService.getAllEvents();
@@ -144,7 +190,11 @@ public class APIController {
         return databaseService.getEventsByDate(date);
     }
 
-
+    // POST -----------------
+    @PostMapping(path="/events")
+    public Events addEvent(@RequestBody Events event) {
+        return databaseService.addEvent(event);
+    }
 
 
 
@@ -241,7 +291,8 @@ public class APIController {
 
 
 
-    // Drinks
+    // Drinks   ############################################################
+    // GET -----------------
     @GetMapping(path="/menu/drinks/all")
     public List<Drinks> getAllDrinks() {
         return databaseService.getAllDrinks();
@@ -256,10 +307,17 @@ public class APIController {
     public List<Drinks> getDrinksByType(@PathVariable String type) {
         return databaseService.getDrinksByType(type);
     }
+    // POST -----------------
+    @PostMapping(path="/menu/drinks")
+    public Drinks addDrink(@RequestBody Drinks drink) {
+        return databaseService.addDrink(drink);
+    }
+    @PostMapping(path="/menu/drinks/{drinkId}/price")
+    public Drinks updateDrinkPrice(@PathVariable int drinkId, @RequestBody Integer price) {
+        return databaseService.updateDrinkPrice(drinkId, price);
+    }
 
-
-
-    // Tables
+    // Tables   ############################################################
 
     @GetMapping(path="/tables/all")
     public List<Tables> getAllTables() {
@@ -276,10 +334,16 @@ public class APIController {
         return databaseService.getTablesByNumberOfSeats(room_for_people);
     }
 
+    // Post -----------------
+
+    @PostMapping(path="/tables")
+    public Tables addTable(@RequestBody Tables table) {
+        return databaseService.addTable(table);
+    }
 
 
-    // Employees
-
+    // Employees    ############################################################
+    // GET -----------------
     @GetMapping(path="/employees/all")
     public List<Employee> getAllEmployees() {
         return databaseService.getAllEmployees();
@@ -305,8 +369,35 @@ public class APIController {
         return databaseService.getHierarchyByEmployeeId(id);
     }
 
-    // Roles
+    // Post -----------------
 
+    @PostMapping(path="/employees")
+    public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
+        try {
+            Employee createdEmployee = databaseService.addEmployee(employee);
+            return ResponseEntity.ok(createdEmployee);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // Change password of employee
+    @PostMapping(path="/employees/{employeeId}/password")
+    public Employee changeEmployeePassword(@PathVariable int employeeId, @RequestBody String password) {
+        return databaseService.updateEmployeePassword(employeeId, password);
+    }
+
+    // Change role of employee
+    @PostMapping(path="/employees/{employeeId}/role/{roleId}")
+    public Employee changeEmployeeRole(@PathVariable int employeeId, @PathVariable int roleId) {
+        return databaseService.changeEmployeeRole(employeeId, roleId);
+    }
+
+
+
+
+    // Roles    ############################################################
+    // GET -----------------
     @GetMapping(path="/roles/all")
     public List<Role> getAllRoles() {
         return databaseService.getAllRoles();
@@ -316,4 +407,20 @@ public class APIController {
     public Role getRoleById(@PathVariable int id) {
         return databaseService.getRoleById(id);
     }
+
+    // Post -----------------
+    // Create a new role
+    @PostMapping(path="/roles")
+    public Role createRole(@RequestBody Role role) {
+        return databaseService.addRole(role);
+    }
+
+    // Change the hierarchy of a role
+    @PostMapping(path="/roles/{roleId}/hierarchy")
+    public Role changeRoleHierarchy(@PathVariable int roleId, @RequestBody Integer hierarchyLevel) {
+        return databaseService.updateRoleHierarchy(roleId, hierarchyLevel);
+    }
+
+
+
 }

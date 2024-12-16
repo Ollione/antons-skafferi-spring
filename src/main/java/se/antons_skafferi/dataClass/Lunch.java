@@ -9,13 +9,14 @@ import java.util.List;
 @Table(name = "lunch")
 public class Lunch {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer lunchId;
     private Integer price;
     private Date date;
 
-    @OneToMany(mappedBy = "lunch", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "lunch", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Items> items;
+    private List<LunchItems> lunchItems;
 
     // Getters and setters
     public Integer getLunchId() {
@@ -42,11 +43,11 @@ public class Lunch {
         this.date = date;
     }
 
-    public List<Items> getItems() {
-        return items;
+    public List<LunchItems> getLunchItems() {
+        return lunchItems;
     }
 
-    public void setItems(List<Items> items) {
-        this.items = items;
+    public void setLunchItems(List<LunchItems> lunchItems) {
+        this.lunchItems = lunchItems;
     }
 }
