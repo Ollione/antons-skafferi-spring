@@ -19,6 +19,7 @@ public class Orders {
     private Integer employee_id;
     private Integer table_number;
     private Integer tab_id;
+    private String note;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -40,7 +41,7 @@ public class Orders {
     @JoinColumn(name = "tab_id", insertable = false, updatable = false)
     private Tab tab;
 
-
+    // Getters and setters
     public Integer getOrder_id() {
         return order_id;
     }
@@ -87,6 +88,14 @@ public class Orders {
 
     public void setTab_id(Integer tab_id) {
         this.tab_id = tab_id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public List<FoodOrder> getFoodOrders() {

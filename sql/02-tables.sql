@@ -142,6 +142,7 @@ CREATE TABLE orders
     employee_id  INT                                   NOT NULL,
     table_number INT                                   NOT NULL,
     tab_id       INT                                   NOT NULL,
+    note         TEXT,
     PRIMARY KEY (order_id),
     FOREIGN KEY (employee_id) REFERENCES employee (employee_id),
     FOREIGN KEY (table_number) REFERENCES tables (table_number),
