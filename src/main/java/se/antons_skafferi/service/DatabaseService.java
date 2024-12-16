@@ -294,7 +294,22 @@ public class DatabaseService {
         }
     }
 
+    public void deleteDrinkFromOrder(int orderId, Integer drinkId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
 
+        DrinkOrder drinkOrder = drinkOrderRepository.findByOrderAndDrink(order, drink)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink order"));
+
+        if (drinkOrder.getQuantity() == 1) {
+            drinkOrderRepository.delete(drinkOrder);
+        } else {
+            drinkOrder.setQuantity(drinkOrder.getQuantity() - 1);
+            drinkOrderRepository.save(drinkOrder);
+        }
+    }
 
 
 

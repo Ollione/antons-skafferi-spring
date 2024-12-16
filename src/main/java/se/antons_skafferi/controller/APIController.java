@@ -249,6 +249,11 @@ public class APIController {
         return databaseService.getOrdersById(orderId);
     }
 
+    @DeleteMapping(path="/orders/{orderId}/drink/{drinkId}/delete")
+    public Orders deleteDrinkFromOrder(@PathVariable int orderId, @PathVariable int drinkId) {
+        databaseService.deleteDrinkFromOrder(orderId, drinkId);
+        return databaseService.getOrdersById(orderId);
+    }
 
     // Tab  ############################################################
     // GET -----------------
