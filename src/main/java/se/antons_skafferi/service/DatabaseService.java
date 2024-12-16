@@ -270,6 +270,48 @@ public class DatabaseService {
         return orderRepository.save(order);
     }
 
+    // DELETE -----------------
+    public void deleteOrder(int orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        orderRepository.delete(order);
+    }
+
+    public void deleteMenuItemFromOrder(int orderId, Integer dinnerId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Dinner dinner = dinnerRepository.findById(dinnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid dinner ID"));
+
+        FoodOrder foodOrder = foodOrderRepository.findByOrderAndDinner(order, dinner)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid food order"));
+
+        if (foodOrder.getQuantity() == 1) {
+            foodOrderRepository.delete(foodOrder);
+        } else {
+            foodOrder.setQuantity(foodOrder.getQuantity() - 1);
+            foodOrderRepository.save(foodOrder);
+        }
+    }
+
+    public void deleteDrinkFromOrder(int orderId, Integer drinkId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
+
+        DrinkOrder drinkOrder = drinkOrderRepository.findByOrderAndDrink(order, drink)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink order"));
+
+        if (drinkOrder.getQuantity() == 1) {
+            drinkOrderRepository.delete(drinkOrder);
+        } else {
+            drinkOrder.setQuantity(drinkOrder.getQuantity() - 1);
+            drinkOrderRepository.save(drinkOrder);
+        }
+    }
+
+
 
 
     // Tabs ############################################################
