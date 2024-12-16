@@ -86,7 +86,7 @@
 
 ## Delete functions
 ### Order
-- [ ] Delete order
+- [x] Delete order
 - [ ] Delete order item
 - [ ] Delete drink from order
 

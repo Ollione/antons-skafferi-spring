@@ -270,6 +270,33 @@ public class DatabaseService {
         return orderRepository.save(order);
     }
 
+    // DELETE -----------------
+    public void deleteOrder(int orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        orderRepository.delete(order);
+    }
+
+    public void deleteMenuItemFromOrder(int orderId, Integer dinnerId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        Dinner dinner = dinnerRepository.findById(dinnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid dinner ID"));
+
+        FoodOrder foodOrder = foodOrderRepository.findByOrderAndDinner(order, dinner)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid food order"));
+
+        if (foodOrder.getQuantity() == 1) {
+            foodOrderRepository.delete(foodOrder);
+        } else {
+            foodOrder.setQuantity(foodOrder.getQuantity() - 1);
+            foodOrderRepository.save(foodOrder);
+        }
+    }
+
+
+
+
 
 
     // Tabs ############################################################

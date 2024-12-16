@@ -4,16 +4,10 @@ package se.antons_skafferi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import se.antons_skafferi.dataClass.*;
 import se.antons_skafferi.service.DatabaseService;
 import se.antons_skafferi.repository.PersonRepository;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Date;
 import java.util.List;
@@ -29,8 +23,6 @@ public class APIController {
     @Autowired
     private DatabaseService databaseService;
 
-    @Autowired
-    private PersonRepository personRepository;
 
 
 
@@ -43,7 +35,6 @@ public class APIController {
     }
 
     // POST -----------------
-// APIController.java
     @PostMapping(path="/persons")
     public ResponseEntity<?> createPerson(@RequestBody Person person) {
         try {
@@ -53,6 +44,8 @@ public class APIController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+
 
     // Items ############################################################
     // GET -----------------
@@ -245,8 +238,16 @@ public class APIController {
         return databaseService.updateOrderNote(orderId, note);
     }
 
-
-
+    // DELETE -----------------
+    @DeleteMapping(path="/orders/{orderId}/delete")
+    public void deleteOrder(@PathVariable int orderId) {
+        databaseService.deleteOrder(orderId);
+    }
+    @DeleteMapping(path="/orders/{orderId}/menu-item/{dinnerId}/delete")
+    public Orders deleteMenuItemFromOrder(@PathVariable int orderId, @PathVariable int dinnerId) {
+        databaseService.deleteMenuItemFromOrder(orderId, dinnerId);
+        return databaseService.getOrdersById(orderId);
+    }
 
 
     // Tab  ############################################################
