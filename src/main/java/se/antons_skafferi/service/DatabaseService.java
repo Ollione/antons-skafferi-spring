@@ -263,7 +263,12 @@ public class DatabaseService {
         return orderRepository.save(order);
     }
 
-
+    public Orders updateOrderNote(int orderId, String note) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
+        order.setNote(note);
+        return orderRepository.save(order);
+    }
 
 
 

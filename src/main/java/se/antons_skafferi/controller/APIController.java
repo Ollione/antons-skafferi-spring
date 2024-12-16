@@ -240,6 +240,10 @@ public class APIController {
         return databaseService.updateOrderStatus(orderId, status);
     }
 
+    @PostMapping(path="/orders/{orderId}/note")
+    public Orders updateOrderNote(@PathVariable int orderId, @RequestBody String note) {
+        return databaseService.updateOrderNote(orderId, note);
+    }
 
 
 
