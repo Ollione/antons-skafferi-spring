@@ -146,15 +146,6 @@ public class DatabaseService {
     }
 
     public Bookings addBooking(Bookings booking) {
-        if (booking.getPerson() == null) {
-            throw new IllegalArgumentException("Person information is missing");
-        }
-        if (booking.getPerson().getPerson_id() == null) {
-            throw new IllegalArgumentException("Person ID is missing");
-        }
-        Person person = personRepository.findById(booking.getPerson().getPerson_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid person ID"));
-        booking.setPerson(person);
         return bookingRepository.save(booking);
     }
 

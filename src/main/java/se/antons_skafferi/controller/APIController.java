@@ -36,13 +36,8 @@ public class APIController {
 
     // POST -----------------
     @PostMapping(path="/persons")
-    public ResponseEntity<?> createPerson(@RequestBody Person person) {
-        try {
-            Person createdPerson = databaseService.addPerson(person);
-            return ResponseEntity.ok(createdPerson);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public Person createPerson(@RequestBody Person person) {
+        return databaseService.addPerson(person);
     }
 
 
@@ -151,9 +146,8 @@ public class APIController {
     // POST -----------------
 
     @PostMapping(path="/calendar/bookings")
-    public ResponseEntity<Bookings> addBooking(@RequestBody Bookings booking) {
-        Bookings createdBooking = databaseService.addBooking(booking);
-        return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+    public Bookings addBooking(@RequestBody Bookings booking) {
+        return databaseService.addBooking(booking);
     }
 
 

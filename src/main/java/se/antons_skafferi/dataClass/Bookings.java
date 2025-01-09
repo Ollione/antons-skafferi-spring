@@ -24,8 +24,10 @@ public class Bookings {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private Integer person_id;
+
     @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private Person person;
 
     // Getters and setters
@@ -71,6 +73,12 @@ public class Bookings {
     }
     public void setPerson(Person person) {
         this.person = person;
+    }
+    public Integer getPerson_id() {
+        return person_id;
+    }
+    public void setPerson_id(Integer person_id) {
+        this.person_id = person_id;
     }
 
     public enum Status {
