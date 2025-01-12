@@ -36,8 +36,6 @@ import java.sql.Timestamp;
  *
  * @version 1.0
  * @since 2025-01-12
- * @author Oliver Olofsson
- * @author Andreas Alexandersson
  */
 @RestController
 @RequestMapping(path="/api")
