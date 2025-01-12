@@ -68,9 +68,7 @@ public class DatabaseService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid phone number"));
     }
 
-
     // POST -----------------
-
     public Person addPerson(Person person) {
         if (personRepository.existsByEmail(person.getEmail())) {
             throw new IllegalArgumentException("Invalid email: Email already exists");
@@ -80,6 +78,14 @@ public class DatabaseService {
         }
         return personRepository.save(person);
     }
+
+    //DELETE -----------------
+    public void deletePerson(int personId) {
+        Person person = personRepository.findById(personId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid person ID"));
+        personRepository.delete(person);
+    }
+
 
     // ITEMS ############################################################
     // GET -----------------
@@ -92,8 +98,12 @@ public class DatabaseService {
         return itemsRepository.save(item);
     }
 
-
-
+    // DELETE -----------------
+    public void deleteItem(int itemId) {
+        Items item = itemsRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID"));
+        itemsRepository.delete(item);
+    }
 
 
     // LUNCH ##########################################
@@ -130,20 +140,34 @@ public class DatabaseService {
         return lunchRepository.save(lunch);
     }
 
+    // DELETE -----------------
+    public void deleteLunchItem(int lunchId) {
+        Lunch lunch = lunchRepository.findById(lunchId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid lunch ID"));
+        lunchRepository.delete(lunch);
+    }
+
     // DINNER ############################################################
     // GET -----------------
     public List<Dinner> getAllDinnerItems() {
         return dinnerRepository.findAll();
     }
+
     public List<Dinner> getDinnerItemsByType(String type) {
         return dinnerRepository.findByType(type);
     }
+
     // POST -----------------
     public Dinner addDinnerItem(Dinner dinner) {
         return dinnerRepository.save(dinner);
     }
 
-
+    // DELETE -----------------
+    public void deleteDinnerItem(int dinnerId) {
+        Dinner dinner = dinnerRepository.findById(dinnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid dinner ID"));
+        dinnerRepository.delete(dinner);
+    }
 
     // BOOKINGS ############################################################
     // GET -----------------
@@ -181,6 +205,12 @@ public class DatabaseService {
                 .orElseThrow(() -> new IllegalArgumentException("No confirmed booking found for the given person ID and date"));
     }
 
+    // DELETE -----------------
+    public void deleteBooking(int bookingId) {
+        Bookings booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid booking ID"));
+        bookingRepository.delete(booking);
+    }
 
 
     // Events   ############################################################
@@ -203,6 +233,12 @@ public class DatabaseService {
         return eventsRepository.save(event);
     }
 
+    // DELETE -----------------
+    public void deleteEvent(int eventId) {
+        Events event = eventsRepository.findById(eventId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid event ID"));
+        eventsRepository.delete(event);
+    }
 
     // Orders ############################################################
     // GET -----------------
@@ -347,7 +383,12 @@ public class DatabaseService {
         return tabRepository.save(tab);
     }
 
-
+    // DELETE -----------------
+    public void deleteTab(int tabId) {
+        Tab tab = tabRepository.findById(tabId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid tab ID"));
+        tabRepository.delete(tab);
+    }
 
     // Drinks ############################################################
     // GET -----------------
@@ -364,9 +405,7 @@ public class DatabaseService {
         return drinksRepository.findByType(type);
     }
 
-
     // POST -----------------
-
     public Drinks addDrink(Drinks drink) {
         return drinksRepository.save(drink);
     }
@@ -378,7 +417,12 @@ public class DatabaseService {
         return drinksRepository.save(drink);
     }
 
-
+    // DELETE -----------------
+    public void deleteDrink(int drinkId) {
+        Drinks drink = drinksRepository.findById(drinkId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid drink ID"));
+        drinksRepository.delete(drink);
+    }
 
     // Tables   ############################################################
     // GET -----------------
@@ -387,7 +431,8 @@ public class DatabaseService {
     }
 
     public Tables getTableById(int id) {
-        return tablesRepository.findById(id);
+        return tablesRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid table ID"));
     }
 
     public List<Tables> getTablesByNumberOfSeats(int room_for_people) {
@@ -399,8 +444,12 @@ public class DatabaseService {
         return tablesRepository.save(table);
     }
 
-
-
+    // DELETE -----------------
+    public void deleteTable(int tableId) {
+        Tables table = tablesRepository.findById(tableId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid table ID"));
+        tablesRepository.delete(table);
+    }
 
 
     // Employees    ############################################################
@@ -464,9 +513,15 @@ public class DatabaseService {
         return employeeRepository.save(employee);
     }
 
+    // DELETE -----------------
+    public void deleteEmployee(int employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID"));
+        employeeRepository.delete(employee);
+    }
 
 
-    // Roles
+    // Roles   ############################################################
     // GET -----------------
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
@@ -491,6 +546,10 @@ public class DatabaseService {
         return roleRepository.save(role);
     }
 
-
-
+    // DELETE -----------------
+    public void deleteRole(int roleId) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid role ID"));
+        roleRepository.delete(role);
+    }
 }

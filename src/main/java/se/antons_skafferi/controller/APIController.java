@@ -51,7 +51,11 @@ public class APIController {
         return databaseService.addPerson(person);
     }
 
-
+    // DELETE -----------------
+    @DeleteMapping(path="/persons/{personId}/delete")
+    public void deletePerson(@PathVariable int personId) {
+        databaseService.deletePerson(personId);
+    }
 
     // Items ############################################################
     // GET -----------------
@@ -66,6 +70,11 @@ public class APIController {
         return databaseService.addItem(item);
     }
 
+    // DELETE -----------------
+    @DeleteMapping(path="/items/{itemId}/delete")
+    public void deleteItem(@PathVariable int itemId) {
+        databaseService.deleteItem(itemId);
+    }
 
 
     // Lunch items  ############################################################
@@ -92,6 +101,11 @@ public class APIController {
         return databaseService.addItemsToLunch(lunchId, itemIds);
     }
 
+    // DELETE -----------------
+    @DeleteMapping(path="/menu/lunch/{lunchId}/delete")
+    public void deleteLunchItem(@PathVariable int lunchId) {
+        databaseService.deleteLunchItem(lunchId);
+    }
 
 
     // Dinner items ############################################################
@@ -119,13 +133,8 @@ public class APIController {
             default:
                 throw new IllegalArgumentException("Invalid dinner type: " + type);
         }
-//        logger.log(java.util.logging.Level.INFO, "Type: " + type);
-//        List<Dinner> dinnerItems = ;
-//        logger.log(java.util.logging.Level.INFO, "Dinner items: " + dinnerItems);
         return databaseService.getDinnerItemsByType(type);
     }
-
-
 
     // POST -----------------
     @PostMapping(path="/menu/dinner")
@@ -133,6 +142,11 @@ public class APIController {
         return databaseService.addDinnerItem(dinner);
     }
 
+    // DELETE -----------------
+    @DeleteMapping(path="/menu/dinner/{dinnerId}/delete")
+    public void deleteDinnerItem(@PathVariable int dinnerId) {
+        databaseService.deleteDinnerItem(dinnerId);
+    }
 
 
 // Bookings ############################################################
@@ -181,13 +195,16 @@ public class APIController {
         return databaseService.addBooking(booking);
     }
 
-
     @PostMapping(path="/calendar/bookings/{id}/status")
     public Bookings updateBookingStatus(@PathVariable Integer id, @RequestBody Bookings.Status status) {
         return databaseService.updateBookingStatus(id, status);
     }
 
-
+    // DELETE -----------------
+    @DeleteMapping(path="/calendar/bookings/{bookingId}/delete")
+    public void deleteBooking(@PathVariable int bookingId) {
+        databaseService.deleteBooking(bookingId);
+    }
 
 
 
@@ -214,6 +231,11 @@ public class APIController {
         return databaseService.addEvent(event);
     }
 
+    // DELETE -----------------
+    @DeleteMapping(path="/events/{eventId}/delete")
+    public void deleteEvent(@PathVariable int eventId) {
+        databaseService.deleteEvent(eventId);
+    }
 
 
 
@@ -223,21 +245,23 @@ public class APIController {
     public List<Orders> getAllOrders() {
         return databaseService.getAllOrders();
     }
+
     @GetMapping(path="/orders/id/{id}")
     public Orders getOrdersById(@PathVariable Integer id) {
         return databaseService.getOrdersById(id);
     }
+
     @GetMapping(path="/orders/date/{date}")
     public List<Orders> getOrdersByDate(@PathVariable Date date) {
         return databaseService.getOrdersByDate(date);
     }
+
     @GetMapping(path="/orders/status/{status}")
     public List<Orders> getOrdersByStatus(@PathVariable Orders.Status status) {
         return databaseService.getOrdersByStatus(status);
     }
 
     // POST -----------------
-
     @PostMapping(path="/orders")
     public Orders createOrder(@RequestBody Orders order) {
         return databaseService.addOrder(order);
@@ -320,7 +344,11 @@ public class APIController {
         return databaseService.updateTabStatus(tabId, status);
     }
 
-
+    // DELETE -----------------
+    @DeleteMapping(path="/tab/{tabId}/delete")
+    public void deleteTab(@PathVariable int tabId) {
+        databaseService.deleteTab(tabId);
+    }
 
 
 
@@ -352,8 +380,14 @@ public class APIController {
         return databaseService.updateDrinkPrice(drinkId, price);
     }
 
-    // Tables   ############################################################
+    // DELETE -----------------
+    @DeleteMapping(path="/menu/drinks/{drinkId}/delete")
+    public void deleteDrink(@PathVariable int drinkId) {
+        databaseService.deleteDrink(drinkId);
+    }
 
+    // Tables   ############################################################
+    // GET -----------------
     @GetMapping(path="/tables/all")
     public List<Tables> getAllTables() {
         return databaseService.getAllTables();
@@ -370,12 +404,16 @@ public class APIController {
     }
 
     // Post -----------------
-
     @PostMapping(path="/tables")
     public Tables addTable(@RequestBody Tables table) {
         return databaseService.addTable(table);
     }
 
+    // Delete -----------------
+    @DeleteMapping(path="/tables/{tableId}/delete")
+    public void deleteTable(@PathVariable int tableId) {
+        databaseService.deleteTable(tableId);
+    }
 
     // Employees    ############################################################
     // GET -----------------
@@ -406,7 +444,6 @@ public class APIController {
     }
 
     // Post -----------------
-
     @PostMapping(path="/employees")
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         try {
@@ -429,8 +466,11 @@ public class APIController {
         return databaseService.changeEmployeeRole(employeeId, roleId);
     }
 
-
-
+    // Delete -----------------
+    @DeleteMapping(path="/employees/{employeeId}/delete")
+    public void deleteEmployee(@PathVariable int employeeId) {
+        databaseService.deleteEmployee(employeeId);
+    }
 
     // Roles    ############################################################
     // GET -----------------
@@ -457,6 +497,10 @@ public class APIController {
         return databaseService.updateRoleHierarchy(roleId, hierarchyLevel);
     }
 
-
+    // Delete -----------------
+    @DeleteMapping(path="/roles/{roleId}/delete")
+    public void deleteRole(@PathVariable int roleId) {
+        databaseService.deleteRole(roleId);
+    }
 
 }
