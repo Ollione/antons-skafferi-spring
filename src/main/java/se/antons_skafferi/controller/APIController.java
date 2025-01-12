@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import se.antons_skafferi.dataClass.*;
 import se.antons_skafferi.service.DatabaseService;
 import se.antons_skafferi.repository.PersonRepository;
@@ -378,6 +379,7 @@ public class APIController {
 
     // Employees    ############################################################
     // GET -----------------
+    @CrossOrigin(origins = "http://localhost:63343")
     @GetMapping(path="/employees/all")
     public List<Employee> getAllEmployees() {
         return databaseService.getAllEmployees();
