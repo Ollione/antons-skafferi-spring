@@ -15,101 +15,174 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.sql.Timestamp;
 
+/**
+ * <h1>APIController</h1>
+ * <p>
+ * This class is the controller for the API. It handles all the requests and responses for the API.
+ * It is responsible for the communication between the frontend and the backend.
+ * </p>
+ * <p>
+ * The {@code APIController} class provides endpoints for managing {@code Bookings}, {@code Dinner}, {@code DrinkOrder}, {@code Drinks},
+ * {@code Employee}, {@code Events}, {@code FoodOrder}, {@code Items}, {@code Lunch}, {@code LunchItems}, {@code Orders}, {@code Person}, {@code Role}, {@code Shift}, {@code Tab},
+ * {@code Tables} and {@code WorksShift}.
+ * </p>
+ * <p>
+ * Each endpoint is mapped to a specific URL path and HTTP method.
+ * </p>
+ * <p>
+ * The class uses the {@link DatabaseService} to perform CRUD operations on the database.
+ * </p>
+ * @see DatabaseService
+ *
+ * @version 1.0
+ * @since 2025-01-12
+ */
 @RestController
 @RequestMapping(path="/api")
 public class APIController {
 
     Logger logger = Logger.getLogger(APIController.class.getName());
 
+    // The DatabaseService is used to perform CRUD operations on the database
     @Autowired
     private DatabaseService databaseService;
 
 
+    // ##############################################################################################################
+    // ##################### PERSONS ################################################################################
+    // ##############################################################################################################
 
-
-
-    // Persons ############################################################
-    // GET -----------------
+    // GET ----------------------------------------------------------------------------------------------------------
+    /**
+     * This method returns all {@code Person}s in the database.
+     * @return {@code List<Person>} – A list of all persons in the database
+     */
     @GetMapping(path="/persons/all")
     public List<Person> getAllPersons() {
         return databaseService.getAllPersons();
     }
 
+    /**
+     * This method returns a {@code Person} by their {@code ID}.
+     * @param email The Email of the person
+     * @return {@code Person} – The person with the specified ID
+     */
     @GetMapping(path="/persons/email/{email}")
     public Person getPersonByEmail(@PathVariable String email) {
         return databaseService.getPersonByEmail(email);
     }
 
+    /**
+     * This method returns a {@code Person} by their {@code phone_number}.
+     * @param phoneNumber The phone number of the person
+     * @return {@code Person} – The person with the specified phone number
+     */
     @GetMapping(path="/persons/phone/{phoneNumber}")
     public Person getPersonByPhoneNumber(@PathVariable String phoneNumber) {
         return databaseService.getPersonByPhoneNumber(phoneNumber);
     }
 
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
+    /**
+     * This method creates a new {@code Person} in the database.
+     * @param person The person to be created
+     * @return {@code Person} – The person that was created
+     */
     @PostMapping(path="/persons")
     public Person createPerson(@RequestBody Person person) {
         return databaseService.addPerson(person);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
+    /**
+     * This method deletes a {@code Person} from the database.
+     * @param personId The ID of the person to be deleted
+     */
     @DeleteMapping(path="/persons/{personId}/delete")
     public void deletePerson(@PathVariable int personId) {
         databaseService.deletePerson(personId);
     }
 
-    // Items ############################################################
-    // GET -----------------
+
+    // ##############################################################################################################
+    // ##################### ITEMS ##################################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
+    /**
+     * This method returns all items in the database.
+     * @return {@code List<Items>} – A list of all items in the database
+     */
     @GetMapping(path="/items/all")
     public List<Items> getAllItems() {
         return databaseService.getAllItems();
     }
 
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
+    /**
+     * This method creates a new item in the database.
+     * @param item The item to be created
+     * @return {@code Items} The item that was created
+     */
     @PostMapping(path="/items")
     public Items addItem(@RequestBody Items item) {
         return databaseService.addItem(item);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
+    /**
+     * This method deletes an item from the database.
+     * @param itemId The ID of the item to be deleted
+     */
     @DeleteMapping(path="/items/{itemId}/delete")
     public void deleteItem(@PathVariable int itemId) {
         databaseService.deleteItem(itemId);
     }
 
 
-    // Lunch items  ############################################################
-    // GET -----------------
+    // ##############################################################################################################
+    // ##################### LUNCH ITEMS ############################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/menu/lunch/all")
     public List<Lunch> getAllLunchItems() {
         return databaseService.getAllLunchItems();
     }
+
     @GetMapping(path="/menu/lunch/date/{date}")
     public List<Lunch> getLunchItemsByDate(@PathVariable Date date) {
         return databaseService.getLunchItemsByDate(date);
     }
+
     @GetMapping(path="/menu/lunch/week/{week}/year/{year}")
     public List<Lunch> getLunchItemsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
         return databaseService.getLunchItemsByWeekAndYear(week, year);
     }
-    // POST -----------------
+
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/menu/lunch")
     public Lunch addLunchItem(@RequestBody Lunch lunch) {
         return databaseService.addLunchItem(lunch);
     }
+
     @PostMapping(path="/menu/lunch/{lunchId}/items")
     public Lunch addItemsToLunch(@PathVariable Integer lunchId, @RequestBody List<Integer> itemIds) {
         return databaseService.addItemsToLunch(lunchId, itemIds);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/menu/lunch/{lunchId}/delete")
     public void deleteLunchItem(@PathVariable int lunchId) {
         databaseService.deleteLunchItem(lunchId);
     }
 
 
-    // Dinner items ############################################################
-    // GET -----------------
+    // ##############################################################################################################
+    // ##################### DINNER ITEMS ###########################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/menu/dinner/all")
     public List<Dinner> getAllDinnerItems() {
         return databaseService.getAllDinnerItems();
@@ -122,8 +195,8 @@ public class APIController {
                 type = "Förrätt";
                 break;
             case "varmratt":
-                type = "Varmrätt";
-                break;
+                type = "Varmrätt";  // I KNOW THIS IS CURSED BUT WE ARE IN TIME CRUNCH AND ITS IMPLEMETED LIKE THIS
+                break;              // IN THE FRONTEND ALREADY
             case "vegetarisk":
                 type = "Vegetarisk";
                 break;
@@ -136,21 +209,24 @@ public class APIController {
         return databaseService.getDinnerItemsByType(type);
     }
 
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/menu/dinner")
     public Dinner addDinnerItem(@RequestBody Dinner dinner) {
         return databaseService.addDinnerItem(dinner);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/menu/dinner/{dinnerId}/delete")
     public void deleteDinnerItem(@PathVariable int dinnerId) {
         databaseService.deleteDinnerItem(dinnerId);
     }
 
 
-// Bookings ############################################################
-    // GET -----------------
+    // ##############################################################################################################
+    // ##################### BOOKINGS ###############################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/calendar/bookings/{type}")
     public List<?> getBookings(@PathVariable String type) {
         return switch (type.toLowerCase()) {
@@ -158,10 +234,12 @@ public class APIController {
             default -> throw new IllegalArgumentException("Invalid booking type: " + type);
         };
     }
+
     @GetMapping(path="/calendar/bookings/date/{date}")
     public List<Bookings> getBookingsByDate(@PathVariable Date date) {
         return databaseService.getBookingsByDate(date);
     }
+
     @GetMapping(path="/calendar/bookings/week/{week}/year/{year}")
     public List<Bookings> getBookingsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
         return databaseService.getBookingsByWeekAndYear(week, year);
@@ -188,8 +266,8 @@ public class APIController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    // POST -----------------
 
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/calendar/bookings")
     public Bookings addBooking(@RequestBody Bookings booking) {
         return databaseService.addBooking(booking);
@@ -200,47 +278,51 @@ public class APIController {
         return databaseService.updateBookingStatus(id, status);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/calendar/bookings/{bookingId}/delete")
     public void deleteBooking(@PathVariable int bookingId) {
         databaseService.deleteBooking(bookingId);
     }
 
 
+    // ##############################################################################################################
+    // ##################### EVENTS #################################################################################
+    // ##############################################################################################################
 
-    // Events   ############################################################
-    // GET -----------------
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/events/all")
     public List<Events> getAllEvents() {
         return databaseService.getAllEvents();
     }
+
     @GetMapping("/events/week/{week}/year/{year}")
     public List<Events> getEventsByWeekAndYear(@PathVariable int week, @PathVariable int year) {
         return databaseService.getEventsByWeekAndYear(week, year);
     }
 
-    // Get events by date
     @GetMapping("/events/date/{date}")
     public List<Events> getEventsByDate(@PathVariable Date date) {
         return databaseService.getEventsByDate(date);
     }
 
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/events")
     public Events addEvent(@RequestBody Events event) {
         return databaseService.addEvent(event);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/events/{eventId}/delete")
     public void deleteEvent(@PathVariable int eventId) {
         databaseService.deleteEvent(eventId);
     }
 
 
+    // ##############################################################################################################
+    // ##################### ORDERS #################################################################################
+    // ##############################################################################################################
 
-    // Orders ############################################################
-    // GET  -----------------
+    // GET  ---------------------------------------------------------------------------------------------------------
     @GetMapping(path="/orders/all")
     public List<Orders> getAllOrders() {
         return databaseService.getAllOrders();
@@ -261,7 +343,7 @@ public class APIController {
         return databaseService.getOrdersByStatus(status);
     }
 
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/orders")
     public Orders createOrder(@RequestBody Orders order) {
         return databaseService.addOrder(order);
@@ -287,7 +369,7 @@ public class APIController {
         return databaseService.updateOrderNote(orderId, note);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/orders/{orderId}/delete")
     public void deleteOrder(@PathVariable int orderId) {
         databaseService.deleteOrder(orderId);
@@ -304,8 +386,12 @@ public class APIController {
         return databaseService.getOrdersById(orderId);
     }
 
-    // Tab  ############################################################
-    // GET -----------------
+
+    // ##############################################################################################################
+    // ##################### TABS ###################################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/tab/all")
     public List<Tab> getAllTabs() {
         return databaseService.getAllTabs();
@@ -332,8 +418,7 @@ public class APIController {
         return databaseService.getTabByTable(table);
     }
 
-
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/tab")
     public Tab createTab(@RequestBody Tab tab) {
         return databaseService.addTab(tab);
@@ -344,18 +429,18 @@ public class APIController {
         return databaseService.updateTabStatus(tabId, status);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/tab/{tabId}/delete")
     public void deleteTab(@PathVariable int tabId) {
         databaseService.deleteTab(tabId);
     }
 
 
+    // ##############################################################################################################
+    // ##################### DRINKS #################################################################################
+    // ##############################################################################################################
 
-
-
-    // Drinks   ############################################################
-    // GET -----------------
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/menu/drinks/all")
     public List<Drinks> getAllDrinks() {
         return databaseService.getAllDrinks();
@@ -370,7 +455,7 @@ public class APIController {
     public List<Drinks> getDrinksByType(@PathVariable String type) {
         return databaseService.getDrinksByType(type);
     }
-    // POST -----------------
+    // POST ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/menu/drinks")
     public Drinks addDrink(@RequestBody Drinks drink) {
         return databaseService.addDrink(drink);
@@ -380,14 +465,18 @@ public class APIController {
         return databaseService.updateDrinkPrice(drinkId, price);
     }
 
-    // DELETE -----------------
+    // DELETE -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/menu/drinks/{drinkId}/delete")
     public void deleteDrink(@PathVariable int drinkId) {
         databaseService.deleteDrink(drinkId);
     }
 
-    // Tables   ############################################################
-    // GET -----------------
+
+    // ##############################################################################################################
+    // ##################### TABLES #################################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/tables/all")
     public List<Tables> getAllTables() {
         return databaseService.getAllTables();
@@ -403,20 +492,24 @@ public class APIController {
         return databaseService.getTablesByNumberOfSeats(room_for_people);
     }
 
-    // Post -----------------
+    // Post ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/tables")
     public Tables addTable(@RequestBody Tables table) {
         return databaseService.addTable(table);
     }
 
-    // Delete -----------------
+    // Delete -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/tables/{tableId}/delete")
     public void deleteTable(@PathVariable int tableId) {
         databaseService.deleteTable(tableId);
     }
 
-    // Employees    ############################################################
-    // GET -----------------
+
+    // ##############################################################################################################
+    // ##################### EMPLOYEES ##############################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @CrossOrigin(origins = "http://localhost:63343")
     @GetMapping(path="/employees/all")
     public List<Employee> getAllEmployees() {
@@ -443,7 +536,7 @@ public class APIController {
         return databaseService.getHierarchyByEmployeeId(id);
     }
 
-    // Post -----------------
+    // Post ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/employees")
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         try {
@@ -454,26 +547,28 @@ public class APIController {
         }
     }
 
-    // Change password of employee
     @PostMapping(path="/employees/{employeeId}/password")
     public Employee changeEmployeePassword(@PathVariable int employeeId, @RequestBody String password) {
         return databaseService.updateEmployeePassword(employeeId, password);
     }
 
-    // Change role of employee
     @PostMapping(path="/employees/{employeeId}/role/{roleId}")
     public Employee changeEmployeeRole(@PathVariable int employeeId, @PathVariable int roleId) {
         return databaseService.changeEmployeeRole(employeeId, roleId);
     }
 
-    // Delete -----------------
+    // Delete -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/employees/{employeeId}/delete")
     public void deleteEmployee(@PathVariable int employeeId) {
         databaseService.deleteEmployee(employeeId);
     }
 
-    // Roles    ############################################################
-    // GET -----------------
+
+    // ##############################################################################################################
+    // ##################### ROLES ##################################################################################
+    // ##############################################################################################################
+
+    // GET ----------------------------------------------------------------------------------------------------------
     @GetMapping(path="/roles/all")
     public List<Role> getAllRoles() {
         return databaseService.getAllRoles();
@@ -484,23 +579,20 @@ public class APIController {
         return databaseService.getRoleById(id);
     }
 
-    // Post -----------------
-    // Create a new role
+    // Post ---------------------------------------------------------------------------------------------------------
     @PostMapping(path="/roles")
     public Role createRole(@RequestBody Role role) {
         return databaseService.addRole(role);
     }
 
-    // Change the hierarchy of a role
     @PostMapping(path="/roles/{roleId}/hierarchy")
     public Role changeRoleHierarchy(@PathVariable int roleId, @RequestBody Integer hierarchyLevel) {
         return databaseService.updateRoleHierarchy(roleId, hierarchyLevel);
     }
 
-    // Delete -----------------
+    // Delete -------------------------------------------------------------------------------------------------------
     @DeleteMapping(path="/roles/{roleId}/delete")
     public void deleteRole(@PathVariable int roleId) {
         databaseService.deleteRole(roleId);
     }
-
 }
