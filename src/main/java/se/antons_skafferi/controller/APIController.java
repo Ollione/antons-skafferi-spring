@@ -267,10 +267,10 @@ public class APIController {
     public void deleteOrder(@PathVariable int orderId) {
         databaseService.deleteOrder(orderId);
     }
-    @DeleteMapping(path="/orders/{orderId}/menu-item/{dinnerId}/delete")
-    public Orders deleteMenuItemFromOrder(@PathVariable int orderId, @PathVariable int dinnerId) {
-        databaseService.deleteMenuItemFromOrder(orderId, dinnerId);
-        return databaseService.getOrdersById(orderId);
+
+    @DeleteMapping(path="/orders/menu-item/{foodOrderId}/delete")
+    public void deleteMenuItemFromOrder(@PathVariable int foodOrderId) {
+        databaseService.deleteMenuItemFromOrder(foodOrderId);
     }
 
     @DeleteMapping(path="/orders/{orderId}/drink/{drinkId}/delete")
