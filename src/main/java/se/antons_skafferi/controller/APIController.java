@@ -1,4 +1,3 @@
-// APIController.java
 package se.antons_skafferi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
