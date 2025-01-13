@@ -582,11 +582,20 @@ public class DatabaseService {
     /**
      * Method to delete a {@code menu item} from an {@code order}.
      * If the order ID is invalid, an exception is thrown.
+     * If the food order does not belong to the order, an exception is thrown.
+     * @param orderId The ID of the order.
      * @param foodOrderId The ID of the food order.
      */
-    public void deleteMenuItemFromOrder(int foodOrderId) {
+    public void deleteMenuItemFromOrder(int orderId, int foodOrderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid order ID"));
         FoodOrder foodOrder = foodOrderRepository.findById(foodOrderId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid food order ID"));
+
+        if (foodOrder.getOrder().getId() != order.getId()) {
+            throw new IllegalArgumentException("Food order does not belong to the specified order");
+        }
+
         foodOrderRepository.delete(foodOrder);
     }
 
