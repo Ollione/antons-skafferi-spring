@@ -86,16 +86,16 @@ INSERT INTO drinks (name, type, description, price) VALUES
 
 -- Events
 INSERT INTO events (name, description, date, start_time, end_time) VALUES
-    ('Julmarknad på Restaurangen', 'Upplev en härlig julmarknad med lokala delikatesser och hantverk.', '2024-12-13', '16:00:00', '21:00:00'),
-    ('Luciafirande', 'Fira Lucia med traditionell luciakör och glöggservering.', '2024-12-14', '18:00:00', '20:00:00'),
-    ('Vinprovning: Julens Smaker', 'Lär dig mer om viner som passar perfekt till julens rätter.', '2024-12-15', '19:00:00', '21:00:00'),
-    ('Julkörskonsert', 'Lyssna på en stämningsfull konsert med julsånger från lokala körer.', '2024-12-17', '17:30:00', '19:30:00'),
-    ('Familjedag med Julpyssel', 'Ta med familjen för en dag med julpyssel och aktiviteter för alla åldrar.', '2024-12-19', '12:00:00', '16:00:00'),
-    ('Julbordskväll', 'Njut av ett klassiskt julbord med alla svenska favoriter.', '2024-12-20', '18:00:00', '22:00:00'),
-    ('Filmkväll: Julklassiker', 'Se en klassisk julfilm med popcorn och mysig atmosfär.', '2024-12-21', '19:00:00', '21:30:00'),
-    ('Dans och Glöggkväll', 'Danskväll med liveband och glöggservering.', '2024-12-22', '20:00:00', '23:30:00'),
-    ('Uppesittarkväll', 'Spendera kvällen med julspel, lotter och fika.', '2024-12-23', '19:00:00', '23:00:00'),
-    ('Julaftonsfirande', 'Fira julafton med julmat, tomtebesök och trevlig stämning.', '2024-12-24', '12:00:00', '18:00:00');
+    ('Julmarknad på Restaurangen', 'Upplev en härlig julmarknad med lokala delikatesser och hantverk.', '2025-01-20', '16:00:00', '21:00:00'),
+    ('Luciafirande', 'Fira Lucia med traditionell luciakör och glöggservering.', '2025-01-21', '18:00:00', '20:00:00'),
+    ('Vinprovning: Julens Smaker', 'Lär dig mer om viner som passar perfekt till julens rätter.', '2025-01-22', '19:00:00', '21:00:00'),
+    ('Julkörskonsert', 'Lyssna på en stämningsfull konsert med julsånger från lokala körer.', '2025-01-23', '17:30:00', '19:30:00'),
+    ('Familjedag med Julpyssel', 'Ta med familjen för en dag med julpyssel och aktiviteter för alla åldrar.', '2025-01-24', '12:00:00', '16:00:00'),
+    ('Julbordskväll', 'Njut av ett klassiskt julbord med alla svenska favoriter.', '2025-01-25', '18:00:00', '22:00:00'),
+    ('Filmkväll: Julklassiker', 'Se en klassisk julfilm med popcorn och mysig atmosfär.', '2025-01-26', '19:00:00', '21:30:00'),
+    ('Dans och Glöggkväll', 'Danskväll med liveband och glöggservering.', '2025-01-27', '20:00:00', '23:30:00'),
+    ('Uppesittarkväll', 'Spendera kvällen med julspel, lotter och fika.', '2025-01-28', '19:00:00', '23:00:00'),
+    ('Julaftonsfirande', 'Fira julafton med julmat, tomtebesök och trevlig stämning.', '2025-01-29', '12:00:00', '18:00:00');
 
 -- Insert into person table
 INSERT INTO person (first_name, last_name, date_of_birth, email, phone_number) VALUES
@@ -120,19 +120,19 @@ INSERT INTO employee (hiring_date, salary, password, person_id, role_id) VALUES
 
 -- Insert lunches into lunch table
 INSERT INTO lunch (price, date)
-VALUES (120, '2025-01-06'),
-       (130, '2025-01-07'),
-       (125, '2025-01-08'),
-       (135, '2025-01-09'),
-       (140, '2025-01-10'),
-       (130, '2025-01-11'),
-       (145, '2025-01-12'),
-       (150, '2025-01-13'),
-       (140, '2025-01-14'),
-       (135, '2025-01-15'),
-       (150, '2025-01-16'),
-       (160, '2025-01-17'),
-       (165, '2025-01-18');
+VALUES (120, '2025-01-20'),
+       (130, '2025-01-21'),
+       (125, '2025-01-22'),
+       (135, '2025-01-23'),
+       (140, '2025-01-24'),
+       (130, '2025-01-25'),
+       (145, '2025-01-26'),
+       (150, '2025-01-27'),
+       (140, '2025-01-28'),
+       (135, '2025-01-29'),
+       (150, '2025-01-30'),
+       (160, '2025-01-31'),
+       (165, '2025-02-01');
 
 -- Insert items into items table
 INSERT INTO items (name, description) VALUES
